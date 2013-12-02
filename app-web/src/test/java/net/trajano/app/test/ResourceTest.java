@@ -14,6 +14,6 @@ public class ResourceTest {
      */
     @Test
     public void testHello() {
-        new AppResource().hello();
+        new AppResource().helloBean();
     }
 }
