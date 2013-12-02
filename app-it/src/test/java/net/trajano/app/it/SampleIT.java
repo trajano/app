@@ -19,6 +19,16 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class SampleIT {
 
     /**
+     * Web driver used for testing.
+     */
+    private WebDriver driver;
+
+    /**
+     * Web driver wait object to allow waiting for conditions to occur.
+     */
+    private WebDriverWait wait;
+
+    /**
      * Initializes the {@link WebDriver} and {@link WebDriverWait}. Uses Firefox
      * as it is readily available.
      */
@@ -37,14 +47,25 @@ public class SampleIT {
     }
 
     /**
-     * Web driver used for testing.
+     * Tests a REST API call using Angular to make the call to the REST API.
      */
-    private WebDriver driver;
+    @Test
+    public void testRest() {
+        driver.get("http://localhost:18080/app/");
+        wait.until(textToBePresentInElement(By.id("bean-message"),
+                "Hello JAX-RS"));
+        wait.until(textToBePresentInElement(By.id("cdi-message"), "Hello CDI"));
+        wait.until(textToBePresentInElement(By.id("jpa-message"), "Hello JPA"));
 
-    /**
-     * Web driver wait object to allow waiting for conditions to occur.
-     */
-    private WebDriverWait wait;
+        assertThat(driver.findElement(By.id("bean-attribute")).getText(),
+                is("bean"));
+        assertThat(driver.findElement(By.id("bean-message")).getText(),
+                is("Hello JAX-RS"));
+        assertThat(driver.findElement(By.id("cdi-message")).getText(),
+                is("Hello CDI"));
+        assertThat(driver.findElement(By.id("jpa-message")).getText(),
+                is("Hello JPA"));
+    }
 
     /**
      * Tests the servlet call.
@@ -54,18 +75,5 @@ public class SampleIT {
         driver.get("http://localhost:18080/app/hello");
         assertThat(driver.findElement(By.id("text")).getText(),
                 startsWith("Hello servlet on "));
-    }
-
-    /**
-     * Tests a REST API call using Angular to make the call to the REST API.
-     */
-    @Test
-    public void testRest() {
-        driver.get("http://localhost:18080/app/");
-        assertThat(driver.findElement(By.id("attribute")).getText(),
-                is("attribute value"));
-        wait.until(textToBePresentInElement(By.id("message"), "Hello JAX-RS"));
-        assertThat(driver.findElement(By.id("message")).getText(),
-                is("Hello JAX-RS"));
     }
 }

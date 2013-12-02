@@ -89,6 +89,13 @@
 						<http-listener>18080</http-listener>
 						<https-listener>18181</https-listener>
 					</ports>
+					<deploymentParams>
+						<param>--createtables=true</param>
+						<param>--precompilejsp=true</param>
+					</deploymentParams>
+					<undeploymentParams>
+						<param>--droptables=true</param>
+					</undeploymentParams>
 				</configuration>
 				<executions>
 					<execution>
