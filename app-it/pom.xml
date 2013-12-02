@@ -3,22 +3,16 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>net.trajano</groupId>
-		<artifactId>trajano</artifactId>
-		<version>5</version>
+		<groupId>net.trajano.app</groupId>
+		<artifactId>app</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
 	</parent>
-	<groupId>net.trajano.app</groupId>
-	<artifactId>app</artifactId>
-	<name>Java EE Application</name>
-	<version>1.0.0-SNAPSHOT</version>
-	<description>Java EE Application</description>
-	<packaging>pom</packaging>
+	<artifactId>app-it</artifactId>
+	<name>Integration tests</name>
+	<description>Integration test</description>
 	<properties>
 		<coding-standards.version>1.1.0</coding-standards.version>
-		<project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>utf-8</project.reporting.outputEncoding>
 	</properties>
-
 	<scm>
 		<connection>scm:git:https://github.com/trajano/${project.artifactId}</connection>
 		<developerConnection>scm:git:ssh://git@github.com/trajano/${project.artifactId}.git</developerConnection>
@@ -26,19 +20,108 @@
 	</scm>
 	<dependencies>
 		<dependency>
-			<groupId>javax</groupId>
-			<artifactId>javaee-api</artifactId>
-			<version>7.0</version>
+			<groupId>net.trajano.app</groupId>
+			<artifactId>app-ear</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+			<type>ear</type>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>net.trajano.commons</groupId>
 			<artifactId>commons-testing</artifactId>
-			<version>1.0.1</version>
+			<version>2.0.0-SNAPSHOT</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-firefox-driver</artifactId>
+			<version>2.37.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-support</artifactId>
+			<version>2.37.1</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>net.trajano</groupId>
+				<artifactId>coding-standards</artifactId>
+				<version>1.1.0</version>
+				<scope>test</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<artifactId>maven-failsafe-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<artifactId>maven-jar-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<artifactId>maven-javadoc-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<artifactId>maven-source-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<extensions>true</extensions>
+			</plugin>
+			<plugin>
+				<groupId>org.glassfish.embedded</groupId>
+				<artifactId>maven-embedded-glassfish-plugin</artifactId>
+				<version>4.0</version>
+				<configuration>
+					<goalPrefix>embedded-glassfish</goalPrefix>
+					<app>${basedir}/../app-ear/target/app-ear-${project.version}.ear</app>
+					<autoDelete>true</autoDelete>
+					<ports>
+						<http-listener>18080</http-listener>
+						<https-listener>18181</https-listener>
+					</ports>
+				</configuration>
+				<executions>
+					<execution>
+						<id>start-glassfish</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>start</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>glassfish-deploy</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>deploy</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>glassfish-undeploy</id>
+						<phase>post-integration-test</phase>
+						<goals>
+							<goal>undeploy</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>stop-glassfish</id>
+						<phase>post-integration-test</phase>
+						<goals>
+							<goal>stop</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
 		<pluginManagement>
 			<plugins>
 				<plugin>
@@ -61,13 +144,6 @@
 					<configuration>
 						<source>1.7</source>
 						<target>1.7</target>
-					</configuration>
-				</plugin>
-				<plugin>
-					<artifactId>maven-ear-plugin</artifactId>
-					<version>2.9</version>
-					<configuration>
-						<version>7</version>
 					</configuration>
 				</plugin>
 				<plugin>
@@ -380,19 +456,6 @@
 												<execute />
 											</action>
 										</pluginExecution>
-										<pluginExecution>
-											<pluginExecutionFilter>
-												<groupId>org.projectlombok</groupId>
-												<artifactId>lombok-maven-plugin</artifactId>
-												<versionRange>[1.12.2.0,)</versionRange>
-												<goals>
-													<goal>delombok</goal>
-												</goals>
-											</pluginExecutionFilter>
-											<action>
-												<execute />
-											</action>
-										</pluginExecution>
 									</pluginExecutions>
 								</lifecycleMappingMetadata>
 							</configuration>
@@ -402,9 +465,4 @@
 			</build>
 		</profile>
 	</profiles>
-	<modules>
-		<module>app-ear</module>
-		<module>app-web</module>
-		<module>app-it</module>
-	</modules>
 </project>

@@ -22,10 +22,22 @@
 	<build>
 		<plugins>
 			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
+				<artifactId>maven-ear-plugin</artifactId>
+				<configuration>
+					<modules>
+						<webModule>
+							<groupId>${project.groupId}</groupId>
+							<artifactId>app-web</artifactId>
+							<contextRoot>/app</contextRoot>
+						</webModule>
+					</modules>
+				</configuration>
 			</plugin>
 			<plugin>
 				<artifactId>maven-jar-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<artifactId>maven-failsafe-plugin</artifactId>
 			</plugin>
 			<plugin>
 				<artifactId>maven-javadoc-plugin</artifactId>
@@ -204,6 +216,7 @@
 						</dependency>
 					</dependencies>
 				</plugin>
+
 			</plugins>
 		</pluginManagement>
 		<extensions>

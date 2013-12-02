@@ -24,7 +24,8 @@ public class HelloServlet extends HttpServlet {
     protected void doGet(final HttpServletRequest req,
             final HttpServletResponse resp) throws ServletException,
             IOException {
-        resp.getWriter().print("Hello servlet on " + new Date());
+        resp.getWriter().print(
+                "<div id='text'>Hello servlet on " + new Date() + "</div>");
     }
 
 }
