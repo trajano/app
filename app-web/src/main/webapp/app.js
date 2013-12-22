@@ -12,7 +12,7 @@ angular.module('app', [ 'ngResource' ])
 			attribute : "@helloRest"
 		},
 		controller : function($scope) {
-			$scope.returned = $resource('rest/app/' + $scope.attribute).get();
+			$scope.returned = $resource('rest/' + $scope.attribute).get();
 		},
 		templateUrl : "hello-rest.html"
 	};

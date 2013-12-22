@@ -1,11 +1,8 @@
-package net.trajano.app.internal;
+package net.trajano.app;
 
 import java.util.Date;
 
 import javax.enterprise.inject.Produces;
-
-import net.trajano.app.Bean;
-import net.trajano.app.Qualified;
 
 /**
  * CDI object factory.
@@ -14,7 +11,7 @@ public class ObjectFactory {
     /**
      * Creates a CDI bean.
      * 
-     * @return
+     * @return produces a bean.
      */
     @Produces
     @Qualified

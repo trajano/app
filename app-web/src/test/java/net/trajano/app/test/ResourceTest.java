@@ -1,6 +1,6 @@
 package net.trajano.app.test;
 
-import net.trajano.app.AppResource;
+import net.trajano.app.BeanResource;
 
 import org.junit.Test;
 
@@ -14,6 +14,6 @@ public class ResourceTest {
      */
     @Test
     public void testHello() {
-        new AppResource().helloBean();
+        new BeanResource().helloBean();
     }
 }

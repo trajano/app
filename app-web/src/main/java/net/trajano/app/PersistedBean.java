@@ -14,12 +14,6 @@ import javax.persistence.TemporalType;
 @Entity
 public class PersistedBean {
     /**
-     * Date.
-     */
-    @Temporal(TemporalType.DATE)
-    private Date date;
-
-    /**
      * ID.
      */
     @Id
@@ -31,9 +25,23 @@ public class PersistedBean {
      */
     private String message;
 
-    public Date getDate() {
-        return date;
-    }
+    /**
+     * Date.
+     */
+    @Temporal(TemporalType.DATE)
+    private Date someDate;
+
+    /**
+     * Date.
+     */
+    @Temporal(TemporalType.TIME)
+    private Date someTime;
+
+    /**
+     * Date.
+     */
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date someTimestamp;
 
     public long getId() {
         return id;
@@ -43,8 +51,16 @@ public class PersistedBean {
         return message;
     }
 
-    public void setDate(final Date date) {
-        this.date = date;
+    public Date getSomeDate() {
+        return someDate;
+    }
+
+    public Date getSomeTime() {
+        return someTime;
+    }
+
+    public Date getSomeTimestamp() {
+        return someTimestamp;
     }
 
     public void setId(final long id) {
@@ -53,5 +69,17 @@ public class PersistedBean {
 
     public void setMessage(final String message) {
         this.message = message;
+    }
+
+    public void setSomeDate(final Date someDate) {
+        this.someDate = someDate;
+    }
+
+    public void setSomeTime(final Date someTime) {
+        this.someTime = someTime;
+    }
+
+    public void setSomeTimestamp(final Date someTimestamp) {
+        this.someTimestamp = someTimestamp;
     }
 }
