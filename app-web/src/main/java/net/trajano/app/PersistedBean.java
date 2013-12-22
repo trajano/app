@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlElement;
 
 /**
  * Sample persisted bean.
@@ -42,6 +43,16 @@ public class PersistedBean {
      */
     @Temporal(TemporalType.TIMESTAMP)
     private Date someTimestamp;
+
+    /**
+     * This will return the value of {@link #someDate}.
+     * 
+     * @return the date
+     */
+    @XmlElement
+    public Date getDate() {
+        return someDate;
+    }
 
     public long getId() {
         return id;

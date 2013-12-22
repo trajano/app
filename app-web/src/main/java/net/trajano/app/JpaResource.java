@@ -33,7 +33,7 @@ public class JpaResource {
         bean.setSomeDate(new Date());
         bean.setSomeTime(new Date());
         bean.setSomeTimestamp(new Date());
-        bean.setMessage("Hello JPA" + new Date());
+        bean.setMessage("Hello JPA");
         persistedBeans.save(bean);
 
         return persistedBeans.getLatest();
