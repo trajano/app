@@ -43,11 +43,16 @@ public class PersistedBeans {
     }
 
     // @RequestScoped
+    /**
+     * Save, flush and refresh a persisted bean. The flush and refreshing is
+     * needed to ensure that the temporal data contains the proper values.
+     * 
+     * @param bean
+     *            bean to persist.
+     */
     public void save(final PersistedBean bean) {
         em.persist(bean);
-        // em.clear();
-        // bean);
-        // em.flush();
-        // em.detach(bean);
+        em.flush();
+        em.refresh(bean);
     }
 }

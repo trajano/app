@@ -17,5 +17,3 @@ angular.module('app', [ 'ngResource' ])
 		templateUrl : "hello-rest.html"
 	};
 });
-
-// .controller("HelloCtrl", $resource('rest/hello'));
