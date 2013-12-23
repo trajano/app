@@ -38,6 +38,21 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>net.trajano.app</groupId>
+				<artifactId>app-ear</artifactId>
+				<version>${project.version}</version>
+				<type>ear</type>
+			</dependency>
+			<dependency>
+				<groupId>net.trajano.app</groupId>
+				<artifactId>app-ws</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 	<build>
 		<pluginManagement>
 			<plugins>
@@ -404,7 +419,8 @@
 	</profiles>
 	<modules>
 		<module>app-ear</module>
-		<module>app-web</module>
 		<module>app-it</module>
+		<module>app-web</module>
+		<module>app-ws</module>
 	</modules>
 </project>
