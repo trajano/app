@@ -33,19 +33,20 @@ public class PersistedBean {
     private Date someDate;
 
     /**
-     * Date.
+     * Time.
      */
     @Temporal(TemporalType.TIME)
     private Date someTime;
 
     /**
-     * Date.
+     * Timestamp.
      */
     @Temporal(TemporalType.TIMESTAMP)
     private Date someTimestamp;
 
     /**
-     * This will return the value of {@link #someDate}.
+     * This will return the value of {@link #someDate}. The {@link XmlElement}
+     * annotation enables it to appear on the returned JSON string.
      * 
      * @return the date
      */

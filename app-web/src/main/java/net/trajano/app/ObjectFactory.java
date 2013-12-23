@@ -2,11 +2,13 @@ package net.trajano.app;
 
 import java.util.Date;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
 
 /**
  * CDI object factory.
  */
+@ApplicationScoped
 public class ObjectFactory {
     /**
      * Creates a CDI bean.

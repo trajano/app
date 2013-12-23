@@ -12,7 +12,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 // @Interceptors(LoggingInterceptor.class)
-// @BusinessMethod
+@BusinessMethod
 public class PersistedBeans {
     /**
      * Entity manager.
@@ -32,13 +32,17 @@ public class PersistedBeans {
     }
 
     // @RequestScoped
+    /**
+     * Gets the latest record.
+     * 
+     * @return latest record.
+     */
     public PersistedBean getLatest() {
         final PersistedBean bean = em
                 .createQuery(
-                        "select p from PersistedBean p order by p.someDate desc, p.id desc",
+                        "select p from PersistedBean p order by p.someTimestamp desc, p.id desc",
                         PersistedBean.class).setFlushMode(FlushModeType.AUTO)
                 .getResultList().get(0);
-        // em.refresh(bean);
         return bean;
     }
 
