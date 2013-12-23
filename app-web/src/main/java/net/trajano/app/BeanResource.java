@@ -13,19 +13,6 @@ import javax.ws.rs.core.MediaType;
 @Path("bean")
 public class BeanResource {
 
-    // /**
-    // * Injected bean.
-    // */
-    // @Inject
-    // @Qualified
-    // private Bean injectedBean;
-
-    // /**
-    // * Persisted beans EJB.
-    // */
-    // @EJB
-    // private PersistedBeans persistedBeans;
-    //
     /**
      * Creates a new bean and returns it.
      * 
@@ -39,50 +26,4 @@ public class BeanResource {
         bean.setMessage("Hello JAX-RS");
         return bean;
     }
-
-    // /**
-    // * Returns an injected CDI bean.
-    // *
-    // * @return bean
-    // */
-    // @GET
-    // @Path("cdi")
-    // @Produces(MediaType.APPLICATION_JSON)
-    // public Bean helloCdiBean() {
-    // return injectedBean;
-    // }
-    //
-    // /**
-    // * Persists a new JPA bean, reads and then returns it.
-    // *
-    // * @return bean
-    // */
-    // @GET
-    // @Path("jpa")
-    // @RequestScoped
-    // @Produces(MediaType.APPLICATION_JSON)
-    // public PersistedBean helloJpaBean() {
-    // final PersistedBean bean = new PersistedBean();
-    // bean.setSomeDate(new Date());
-    // bean.setSomeTime(new Date());
-    // bean.setSomeTimestamp(new Date());
-    // bean.setMessage("Hello JPA" + new Date());
-    // persistedBeans.save(bean);
-    //
-    // return persistedBeans.getLatest();
-    // }
-    //
-    // /**
-    // * Persists a new JPA bean, reads and then returns it.
-    // *
-    // * @return bean
-    // */
-    // @GET
-    // @Path("jpa/{id}")
-    // @RequestScoped
-    // @Produces(MediaType.APPLICATION_JSON)
-    // public PersistedBean helloJpaBean(@PathParam("id") final long id) {
-    // return persistedBeans.get(id);
-    // }
-
 }

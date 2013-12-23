@@ -11,7 +11,6 @@ import javax.persistence.PersistenceContext;
  * @author Archimedes
  */
 @Stateless
-// @Interceptors(LoggingInterceptor.class)
 @BusinessMethod
 public class PersistedBeans {
     /**
@@ -31,7 +30,6 @@ public class PersistedBeans {
         return em.find(PersistedBean.class, id);
     }
 
-    // @RequestScoped
     /**
      * Gets the latest record.
      * 
@@ -46,7 +44,6 @@ public class PersistedBeans {
         return bean;
     }
 
-    // @RequestScoped
     /**
      * Save, flush and refresh a persisted bean. The flush and refreshing is
      * needed to ensure that the temporal data contains the proper values.

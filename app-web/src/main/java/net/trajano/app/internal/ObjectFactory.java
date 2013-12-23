@@ -1,9 +1,12 @@
-package net.trajano.app;
+package net.trajano.app.internal;
 
 import java.util.Date;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
+
+import net.trajano.app.Bean;
+import net.trajano.app.Qualified;
 
 /**
  * CDI object factory.

@@ -1,16 +1,20 @@
-package net.trajano.app;
+package net.trajano.app.internal;
 
 import java.util.logging.Logger;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
+
+import net.trajano.app.BusinessMethod;
 
 /**
  * @author Archimedes
  */
 @BusinessMethod
 @Interceptor
+@ApplicationScoped
 public class LoggingInterceptor {
     /**
      * Logger.
