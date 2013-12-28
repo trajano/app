@@ -43,6 +43,12 @@
 			<version>2.37.1</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.derby</groupId>
+			<artifactId>derby</artifactId>
+			<version>10.10.1.1</version>
+			<scope>runtime</scope>
+		</dependency>
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>
@@ -77,55 +83,85 @@
 				<extensions>true</extensions>
 			</plugin>
 			<plugin>
-				<groupId>org.glassfish.embedded</groupId>
-				<artifactId>maven-embedded-glassfish-plugin</artifactId>
-				<version>4.0</version>
+				<groupId>org.codehaus.cargo</groupId>
+				<artifactId>cargo-maven2-plugin</artifactId>
+				<version>1.4.6</version>
 				<configuration>
-					<goalPrefix>embedded-glassfish</goalPrefix>
-					<app>${basedir}/../app-ear/target/app-ear-${project.version}.ear</app>
-					<autoDelete>true</autoDelete>
-					<ports>
-						<http-listener>18080</http-listener>
-						<https-listener>18181</https-listener>
-					</ports>
-					<deploymentParams>
-						<param>--createtables=true</param>
-						<param>--precompilejsp=true</param>
-					</deploymentParams>
-					<undeploymentParams>
-						<param>--droptables=true</param>
-					</undeploymentParams>
+					<configuration>
+						<properties>
+							<cargo.servlet.port>18080</cargo.servlet.port>
+							<cargo.glassfish.http.ssl.port>18181</cargo.glassfish.http.ssl.port>
+							<cargo.glassfish.admin.port>14848</cargo.glassfish.admin.port>
+							<cargo.glassfish.jms.port>17676</cargo.glassfish.jms.port>
+							<cargo.glassfish.deploy.arg.1>--precompilejsp=true</cargo.glassfish.deploy.arg.1>
+							<cargo.glassfish.deploy.arg.2>--createtables=true</cargo.glassfish.deploy.arg.2>
+							<cargo.glassfish.undeploy.arg.1>--droptables=true</cargo.glassfish.undeploy.arg.1>
+							<cargo.datasource.datasource.derby>
+								cargo.datasource.driver=org.apache.derby.jdbc.EmbeddedDriver|
+								cargo.datasource.url=jdbc:derby:derbyDB;create=true|
+								cargo.datasource.jndi=jdbc/__default|
+								cargo.datasource.username=APP|
+								cargo.datasource.password=nonemptypassword
+							</cargo.datasource.datasource.derby>
+						</properties>
+
+						<configfiles>
+							<configfile>
+								<file>${basedir}/src/main/cargo/keyfile</file>
+								<todir>cargo-domain/config/</todir>
+								<overwrite>true</overwrite>
+							</configfile>
+						</configfiles>
+
+						<xmlReplacements>
+							<xmlReplacement>
+								<file>cargo-domain/config/domain.xml</file>
+								<xpathExpression>//security-service</xpathExpression>
+								<attributeName>activate-default-principal-to-role-mapping</attributeName>
+								<value>true</value>
+							</xmlReplacement>
+						</xmlReplacements>
+					</configuration>
+					<container>
+						<containerId>glassfish4x</containerId>
+						<artifactInstaller>
+							<groupId>org.glassfish.main.distributions</groupId>
+							<artifactId>glassfish</artifactId>
+							<version>4.0-b90</version>
+							<type>zip</type>
+						</artifactInstaller>
+					</container>
+					<deployables>
+						<deployable>
+							<groupId>${project.groupId}</groupId>
+							<artifactId>app-ear</artifactId>
+							<type>ear</type>
+						</deployable>
+					</deployables>
 				</configuration>
 				<executions>
 					<execution>
-						<id>start-glassfish</id>
+						<id>start-container</id>
 						<phase>pre-integration-test</phase>
 						<goals>
 							<goal>start</goal>
 						</goals>
 					</execution>
 					<execution>
-						<id>glassfish-deploy</id>
-						<phase>pre-integration-test</phase>
-						<goals>
-							<goal>deploy</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>glassfish-undeploy</id>
-						<phase>post-integration-test</phase>
-						<goals>
-							<goal>undeploy</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>stop-glassfish</id>
+						<id>stop-container</id>
 						<phase>post-integration-test</phase>
 						<goals>
 							<goal>stop</goal>
 						</goals>
 					</execution>
 				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>org.codehaus.cargo</groupId>
+						<artifactId>cargo-core-container-glassfish</artifactId>
+						<version>1.4.7-SNAPSHOT</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 		</plugins>
 		<pluginManagement>
@@ -273,6 +309,7 @@
 					<artifactId>maven-bundle-plugin</artifactId>
 					<version>2.4.0</version>
 				</plugin>
+
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>cobertura-maven-plugin</artifactId>

@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
@@ -34,7 +35,9 @@ public class SampleIT {
      */
     @Before
     public void setupDriver() {
-        driver = new FirefoxDriver();
+        final FirefoxProfile firefoxProfile = new FirefoxProfile();
+        firefoxProfile.setAcceptUntrustedCertificates(true);
+        driver = new FirefoxDriver(firefoxProfile);
         wait = new WebDriverWait(driver, WebDriverWait.DEFAULT_SLEEP_TIMEOUT);
     }
 
@@ -51,7 +54,8 @@ public class SampleIT {
      */
     @Test
     public void testRest() {
-        driver.get("http://localhost:18080/app/");
+        driver.get("https://trajano:trajano@localhost:18181/app/rest");
+        driver.get("http://localhost:18080/app");
         wait.until(textToBePresentInElement(By.id("bean-message"),
                 "Hello JAX-RS"));
         wait.until(textToBePresentInElement(By.id("cdi-message"), "Hello CDI"));
