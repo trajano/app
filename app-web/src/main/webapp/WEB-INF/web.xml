@@ -3,6 +3,12 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
 	version="3.1" metadata-complete="false">
 	<distributable />
+	<session-config>
+		<session-timeout>1</session-timeout>
+		<cookie-config>
+			<max-age>0</max-age>
+		</cookie-config>
+	</session-config>
 	<security-role>
 		<description>Users</description>
 		<role-name>users</role-name>
