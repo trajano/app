@@ -21,7 +21,7 @@ import net.webservicex.Accelerations;
 public class HelloServlet extends HttpServlet {
 
     /**
-     * 
+     * Serial version UID.
      */
     private static final long serialVersionUID = 6782169459286299897L;
 
@@ -44,5 +44,4 @@ public class HelloServlet extends HttpServlet {
                                 Accelerations.METER_PERSQUARESECOND)
                         + "m/s^2</div>");
     }
-
 }
