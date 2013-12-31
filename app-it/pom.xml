@@ -93,6 +93,7 @@
 							<cargo.glassfish.http.ssl.port>18181</cargo.glassfish.http.ssl.port>
 							<cargo.glassfish.admin.port>14848</cargo.glassfish.admin.port>
 							<cargo.glassfish.jms.port>17676</cargo.glassfish.jms.port>
+							<cargo.glassfish.orb.listener.port>13700</cargo.glassfish.orb.listener.port>
 							<cargo.glassfish.deploy.arg.1>--precompilejsp=true</cargo.glassfish.deploy.arg.1>
 							<cargo.glassfish.deploy.arg.2>--createtables=true</cargo.glassfish.deploy.arg.2>
 							<cargo.glassfish.undeploy.arg.1>--droptables=true</cargo.glassfish.undeploy.arg.1>
