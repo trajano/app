@@ -84,11 +84,11 @@ public class PersistedBean {
     }
 
     public void setSomeDate(final Date someDate) {
-        this.someDate = someDate;
+        this.someDate = new Date(someDate.getTime());
     }
 
     public void setSomeTime(final Date someTime) {
-        this.someTime = someTime;
+        this.someTime = new Date(someTime.getTime());
     }
 
     public void setSomeTimestamp(final Date someTimestamp) {

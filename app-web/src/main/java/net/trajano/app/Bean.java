@@ -17,7 +17,7 @@ public class Bean {
     private String message;
 
     public Date getDate() {
-        return date;
+        return new Date(date.getTime());
     }
 
     public String getMessage() {
@@ -25,7 +25,7 @@ public class Bean {
     }
 
     public void setDate(final Date date) {
-        this.date = date;
+        this.date = new Date(date.getTime());
     }
 
     public void setMessage(final String message) {

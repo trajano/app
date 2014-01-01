@@ -22,7 +22,7 @@ public class LoggingInterceptor {
     private static final Logger LOG = Logger.getLogger("net.trajano.app");
 
     /**
-     * Logs.
+     * Logs an invocation event.
      * 
      * @param ctx
      *            context
@@ -30,7 +30,7 @@ public class LoggingInterceptor {
      * @throws Throwable
      */
     @AroundInvoke
-    public Object log(final InvocationContext ctx) throws Throwable {
+    public Object logInvocation(final InvocationContext ctx) throws Throwable {
         LOG.warning("around invoke " + ctx.getMethod());
         try {
             return ctx.proceed();

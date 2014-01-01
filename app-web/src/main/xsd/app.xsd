@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://app.trajano.net/schema"
+	xmlns:tns="http://app.trajano.net/schema" elementFormDefault="qualified">
+	<element name="message-bean">
+		<complexType>
+			<all>
+				<element name="message" type="string"></element>
+				<element name="timestamp" type="dateTime"></element>
+			</all>
+		</complexType>
+	</element>
+</schema>

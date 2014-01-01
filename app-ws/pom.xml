@@ -82,7 +82,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 													jaxws-maven-plugin
 												</artifactId>
 												<versionRange>
-													[2.3.1-b03,)
+													[2.3,)
 												</versionRange>
 												<goals>
 													<goal>wsimport</goal>
