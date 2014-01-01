@@ -8,5 +8,6 @@
 		<javaType name="java.util.Calendar" xmlType="xs:dateTime"
 			parseMethod="javax.xml.bind.DatatypeConverter.parseDateTime"
 			printMethod="javax.xml.bind.DatatypeConverter.printDateTime" />
+		<xjc:serializable />
 	</globalBindings>
 </bindings>
