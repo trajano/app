@@ -52,7 +52,7 @@ public class PersistedBean {
      */
     @XmlElement
     public Date getDate() {
-        return someDate;
+        return new Date(someDate.getTime());
     }
 
     public long getId() {
