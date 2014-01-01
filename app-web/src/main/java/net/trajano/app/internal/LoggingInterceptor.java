@@ -19,7 +19,7 @@ public class LoggingInterceptor {
     /**
      * Logger.
      */
-    private static final Logger log = Logger.getLogger("net.trajano.app");
+    private static final Logger LOG = Logger.getLogger("net.trajano.app");
 
     /**
      * Logs.
@@ -31,11 +31,11 @@ public class LoggingInterceptor {
      */
     @AroundInvoke
     public Object log(final InvocationContext ctx) throws Throwable {
-        log.warning("around invoke " + ctx.getMethod());
+        LOG.warning("around invoke " + ctx.getMethod());
         try {
             return ctx.proceed();
         } catch (final Throwable e) {
-            log.severe("Error calling ctx.proceed in " + ctx.getMethod());
+            LOG.severe("Error calling ctx.proceed in " + ctx.getMethod());
             throw e;
         }
     }
