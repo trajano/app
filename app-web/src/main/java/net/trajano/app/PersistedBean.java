@@ -64,15 +64,15 @@ public class PersistedBean {
     }
 
     public Date getSomeDate() {
-        return someDate;
+        return new Date(someDate.getTime());
     }
 
     public Date getSomeTime() {
-        return someTime;
+        return new Date(someTime.getTime());
     }
 
     public Date getSomeTimestamp() {
-        return someTimestamp;
+        return new Date(someTimestamp.getTime());
     }
 
     public void setId(final long id) {
@@ -92,6 +92,6 @@ public class PersistedBean {
     }
 
     public void setSomeTimestamp(final Date someTimestamp) {
-        this.someTimestamp = someTimestamp;
+        this.someTimestamp = new Date(someTimestamp.getTime());
     }
 }
