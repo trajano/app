@@ -1,19 +1,23 @@
-angular.module('app', [ 'ngResource' ])
+(function() {
+	'use strict';
 
-.directive("helloDirective", function() {
-	return {
-		template : "Hello from directive"
-	};
-})
+	angular.module('app', [ 'ngResource', 'echo-client' ])
 
-.directive("helloRest", function($resource) {
-	return {
-		scope : {
-			attribute : "@helloRest"
-		},
-		controller : function($scope) {
-			$scope.returned = $resource('rest/' + $scope.attribute).get();
-		},
-		templateUrl : "hello-rest.html"
-	};
-});
+	.directive("helloDirective", function() {
+		return {
+			template : "Hello from directive"
+		};
+	})
+
+	.directive("helloRest", function($resource) {
+		return {
+			scope : {
+				attribute : "@helloRest"
+			},
+			controller : function($scope) {
+				$scope.returned = $resource('rest/' + $scope.attribute).get();
+			},
+			templateUrl : "hello-rest.html"
+		};
+	});
+}());

@@ -1,0 +1,21 @@
+<div class="well">
+	<form>
+		Message: <input data-ng-model="message" />
+		<button data-ng-click="sendMessage()" class="btn">Send
+			message</button>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Direction</th>
+					<th>Message</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr data-ng-repeat="interaction in interactions">
+					<td>{{interaction.direction}}</td>
+					<td>{{interaction.message}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</form>
+</div>
