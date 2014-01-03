@@ -1,5 +1,6 @@
 package net.trajano.app;
 
+import javax.ejb.EJB;
 import javax.jws.Oneway;
 import javax.jws.WebService;
 
@@ -16,6 +17,12 @@ import net.trajano.app.schema.MessageBean;
  */
 @WebService(targetNamespace = "http://app.trajano.net/ws")
 public class SomeWeb {
+    /**
+     * Persisted beans table model.
+     */
+    @EJB
+    private PersistedBeans persistedBeans;
+
     /**
      * Echos back the input input string.
      * 
@@ -38,14 +45,24 @@ public class SomeWeb {
         return messageBean;
     }
 
+    /**
+     * Gets a bean by ID.
+     * 
+     * @param id
+     *            id of bean to retrieve
+     * @return persisted bean
+     */
     public MessageBean getBean(final long id) {
-        // TODO
-        return null;
+        return mapPersistedBeanToMessageBean(persistedBeans.get(id));
     }
 
+    /**
+     * Gets the latest stored persisted bean.
+     * 
+     * @return latest stored persisted bean.
+     */
     public MessageBean getLatest() {
-        // TODO
-        return null;
+        return mapPersistedBeanToMessageBean(persistedBeans.getLatest());
     }
 
     private MessageBean mapMessageBeanToPersistedBean(
@@ -56,10 +73,16 @@ public class SomeWeb {
 
     private MessageBean mapPersistedBeanToMessageBean(
             final PersistedBean persistedBean) {
-        // TODO
-        return null;
+        final MessageBean ret = new MessageBean();
+        ret.setMessage(persistedBean.getMessage());
+        return ret;
     }
 
+    /**
+     * Saves the message bean data into a persisted bean.
+     * 
+     * @param messageBean
+     */
     @Oneway
     public void persistBean(final MessageBean messageBean) {
         // TODO
