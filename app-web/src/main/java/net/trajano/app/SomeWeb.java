@@ -1,5 +1,8 @@
 package net.trajano.app;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 import javax.ejb.EJB;
 import javax.jws.Oneway;
 import javax.jws.WebService;
@@ -65,16 +68,20 @@ public class SomeWeb {
         return mapPersistedBeanToMessageBean(persistedBeans.getLatest());
     }
 
-    private MessageBean mapMessageBeanToPersistedBean(
-            final PersistedBean persistedBean) {
-        // TODO
-        return null;
-    }
-
+    /**
+     * Maps a persisted bean to a message bean.
+     * 
+     * @param persistedBean
+     *            persisted bean.
+     * @return message bean
+     */
     private MessageBean mapPersistedBeanToMessageBean(
             final PersistedBean persistedBean) {
         final MessageBean ret = new MessageBean();
         ret.setMessage(persistedBean.getMessage());
+        final Calendar c = new GregorianCalendar();
+        c.setTime(persistedBean.getDate());
+        ret.setTimestamp(c);
         return ret;
     }
 
@@ -82,9 +89,15 @@ public class SomeWeb {
      * Saves the message bean data into a persisted bean.
      * 
      * @param messageBean
+     *            data to persist
      */
     @Oneway
     public void persistBean(final MessageBean messageBean) {
-        // TODO
+        final PersistedBean persistedBean = new PersistedBean();
+        persistedBean.setMessage(messageBean.getMessage());
+        persistedBean.setSomeDate(messageBean.getTimestamp().getTime());
+        persistedBean.setSomeTime(messageBean.getTimestamp().getTime());
+        persistedBean.setSomeTimestamp(messageBean.getTimestamp().getTime());
+        persistedBeans.save(persistedBean);
     }
 }
