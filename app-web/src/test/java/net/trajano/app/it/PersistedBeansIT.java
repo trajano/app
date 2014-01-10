@@ -36,7 +36,7 @@ public class PersistedBeansIT {
 		props.put("javax.persistence.jdbc.driver",
 				EmbeddedDriver.class.getName());
 		props.put("javax.persistence.jdbc.url",
-				"jdbc:derby:target/derbyDB;create=true");
+				"jdbc:derby:memory:derbyDB;create=true");
 		props.put("javax.persistence.schema-generation.database.action",
 				"create");
 		final EntityManagerFactory emf = Persistence
