@@ -1,5 +1,7 @@
 package net.trajano.app;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.FlushModeType;
@@ -31,17 +33,21 @@ public class PersistedBeans {
 	}
 
 	/**
-	 * Gets the latest record.
+	 * Gets the latest record. It returns null if there are no records.
 	 * 
 	 * @return latest record.
 	 */
 	public PersistedBean getLatest() {
-		final PersistedBean bean = em
+		final List<PersistedBean> resultList = em
 				.createQuery(
 						"select p from PersistedBean p order by p.someTimestamp desc, p.id desc",
 						PersistedBean.class).setFlushMode(FlushModeType.AUTO)
-				.getResultList().get(0);
-		return bean;
+				.getResultList();
+		if (resultList.isEmpty()) {
+			return null;
+		} else {
+			return resultList.get(0);
+		}
 	}
 
 	/**

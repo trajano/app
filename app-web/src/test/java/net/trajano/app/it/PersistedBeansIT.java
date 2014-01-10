@@ -1,7 +1,11 @@
 package net.trajano.app.it;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.SQLNonTransientConnectionException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,10 +32,20 @@ import org.junit.Test;
  */
 public class PersistedBeansIT {
 	/**
-	 * Creates the entity manager.
+	 * Entity manager.
+	 */
+	private EntityManager em;
+
+	/**
+	 * Entity manager factory.
+	 */
+	private EntityManagerFactory emf;
+
+	/**
+	 * Creates the entity manager and entity manager factory.
 	 */
 	@Before
-	public void createEntityManager() {
+	public void createJpaObjects() {
 		final Map<String, String> props = new HashMap<>();
 		props.put("javax.persistence.jdbc.driver",
 				EmbeddedDriver.class.getName());
@@ -39,22 +53,34 @@ public class PersistedBeansIT {
 				"jdbc:derby:memory:derbyDB;create=true");
 		props.put("javax.persistence.schema-generation.database.action",
 				"create");
-		final EntityManagerFactory emf = Persistence
-				.createEntityManagerFactory("default", props);
+		emf = Persistence.createEntityManagerFactory("default", props);
 		em = emf.createEntityManager();
 	}
 
-	private EntityManager em;
-
+	/**
+	 * Closes the JPA objects and drops the in-memory database.
+	 */
 	@After
-	public void closeEntityManager() {
+	public void dropJpaObjects() {
 		em.close();
+		emf.close();
+		try {
+			DriverManager.getConnection("jdbc:derby:memory:derbyDB;drop=true");
+		} catch (SQLException e) {
+			assertEquals(SQLNonTransientConnectionException.class, e.getClass());
+		}
 	}
 
 	@Test
 	public void testBean() {
 		final PersistedBeans persistedBeans = new PersistedBeans();
 		persistedBeans.setEntityManager(em);
+		{
+			em.getTransaction().begin();
+			PersistedBean bean = persistedBeans.getLatest();
+			assertNull(bean);
+			em.getTransaction().commit();
+		}
 		{
 			em.getTransaction().begin();
 			PersistedBean bean = new PersistedBean();
@@ -71,5 +97,14 @@ public class PersistedBeansIT {
 			assertEquals("This is a message", bean.getMessage());
 			em.getTransaction().commit();
 		}
+	}
+
+	/**
+	 * Run the test again, this ensures there are no records in the database for
+	 * each test.
+	 */
+	@Test
+	public void testBeanAgain() {
+		testBean();
 	}
 }
