@@ -60,10 +60,10 @@ public class PersistedBeans {
 	/**
 	 * Injects the entity manager for testing.
 	 * 
-	 * @param em
+	 * @param entityManager
 	 *            entity manager.
 	 */
-	public void setEntityManager(EntityManager em) {
-		this.em = em;
+	public void setEntityManager(final EntityManager entityManager) {
+		em = entityManager;
 	}
 }
