@@ -27,6 +27,7 @@ public class CdiResource {
      * @return bean
      */
     @GET
+    @Path("/latest")
     @Produces(MediaType.APPLICATION_JSON)
     public Bean helloCdiBean() {
         return injectedBean;

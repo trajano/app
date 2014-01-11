@@ -9,15 +9,18 @@
 		};
 	})
 
-	.directive("helloRest", function($resource) {
-		return {
-			scope : {
-				attribute : "@helloRest"
-			},
-			controller : function($scope) {
-				$scope.returned = $resource('rest/' + $scope.attribute).get();
-			},
-			templateUrl : "hello-rest.html"
-		};
-	});
+	.directive(
+			"helloRest",
+			function($resource) {
+				return {
+					scope : {
+						attribute : "@helloRest"
+					},
+					controller : function($scope) {
+						$scope.returned = $resource(
+								'rest/' + $scope.attribute + "/latest").get();
+					},
+					templateUrl : "hello-rest.html"
+				};
+			});
 }());

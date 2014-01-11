@@ -27,6 +27,7 @@ public class JpaResource {
      * @return bean
      */
     @GET
+    @Path("/latest")
     @Produces(MediaType.APPLICATION_JSON)
     public PersistedBean helloJpaBean() {
         final PersistedBean bean = new PersistedBean();

@@ -19,6 +19,7 @@ public class BeanResource {
      * @return bean
      */
     @GET
+    @Path("/latest")
     @Produces(MediaType.APPLICATION_JSON)
     public Bean helloBean() {
         final Bean bean = new Bean();
