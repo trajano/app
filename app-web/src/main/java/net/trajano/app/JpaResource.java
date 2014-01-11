@@ -1,6 +1,7 @@
 package net.trajano.app;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ws.rs.GET;
@@ -22,6 +23,31 @@ public class JpaResource {
     private PersistedBeans persistedBeans;
 
     /**
+     * Returns all data in the table.
+     * 
+     * @return bean collcetion
+     */
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<PersistedBean> getAll() {
+        return persistedBeans.getAll();
+    }
+
+    /**
+     * Reads a bean by ID and then returns it.
+     * 
+     * @param id
+     *            primary key.
+     * @return bean
+     */
+    @GET
+    @Path("{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public PersistedBean getById(@PathParam("id") final long id) {
+        return persistedBeans.get(id);
+    }
+
+    /**
      * Persists a new JPA bean, reads and then returns it.
      * 
      * @return bean
@@ -38,20 +64,6 @@ public class JpaResource {
         persistedBeans.save(bean);
 
         return persistedBeans.getLatest();
-    }
-
-    /**
-     * Persists a new JPA bean, reads and then returns it.
-     * 
-     * @param id
-     *            primary key.
-     * @return bean
-     */
-    @GET
-    @Path("{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public PersistedBean helloJpaBean(@PathParam("id") final long id) {
-        return persistedBeans.get(id);
     }
 
 }
