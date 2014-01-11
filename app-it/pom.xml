@@ -94,6 +94,7 @@
 							<cargo.glassfish.orb.listener.port>13700</cargo.glassfish.orb.listener.port>
 							<cargo.glassfish.orb.ssl.port>13820</cargo.glassfish.orb.ssl.port>
 							<cargo.glassfish.orb.mutualauth.port>13920</cargo.glassfish.orb.mutualauth.port>
+							<cargo.glassfish.java.debugger.port>19009</cargo.glassfish.java.debugger.port>
 							<cargo.glassfish.jmx.admin.port>18686 for</cargo.glassfish.jmx.admin.port>
 							<cargo.glassfish.deploy.arg.1>--precompilejsp=true</cargo.glassfish.deploy.arg.1>
 							<cargo.glassfish.deploy.arg.2>--createtables=true</cargo.glassfish.deploy.arg.2>
