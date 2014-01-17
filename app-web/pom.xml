@@ -30,10 +30,6 @@
 		</dependency>
 		<dependency>
 			<groupId>net.trajano.app</groupId>
-			<artifactId>app-ws</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>net.trajano.app</groupId>
 			<artifactId>app-domain</artifactId>
 		</dependency>
 		<dependency>
