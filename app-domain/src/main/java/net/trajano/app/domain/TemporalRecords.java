@@ -52,6 +52,6 @@ public class TemporalRecords {
 	}
 
 	public void save(String string) {
-
+		save(string, new Date());
 	}
 }

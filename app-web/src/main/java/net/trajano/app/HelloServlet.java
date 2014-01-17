@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.trajano.app.domain.TemporalRecords;
-import net.trajano.app.domain.TemporalRecord;
 
 /**
  * Hello world servlet.
