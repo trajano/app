@@ -1,10 +1,10 @@
-package net.trajano.app;
+package net.trajano.app.domain;
+
+import java.util.Date;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
-import net.trajano.app.domain.TemporalRecord;
 
 /**
  * SLSB to manage persisted classes. This would be the table model.
@@ -12,8 +12,7 @@ import net.trajano.app.domain.TemporalRecord;
  * @author Archimedes Trajano
  */
 @Stateless
-@BusinessMethod
-public class PersistedBeans {
+public class TemporalRecords {
 	/**
 	 * Entity manager.
 	 */
@@ -33,6 +32,15 @@ public class PersistedBeans {
 		em.refresh(bean);
 	}
 
+	public void save(final String message, Date effectiveDate) {
+		TemporalRecord bean = new TemporalRecord();
+		bean.setMessage("Hello world");
+		bean.setEffectiveDate(effectiveDate);
+		em.persist(bean);
+		em.flush();
+		em.refresh(bean);
+	}
+
 	/**
 	 * Injects the entity manager for testing.
 	 * 
@@ -41,5 +49,9 @@ public class PersistedBeans {
 	 */
 	public void setEntityManager(final EntityManager entityManager) {
 		em = entityManager;
+	}
+
+	public void save(String string) {
+
 	}
 }

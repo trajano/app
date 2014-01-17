@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.trajano.app.domain.TemporalRecords;
 import net.trajano.app.domain.TemporalRecord;
 
 /**
@@ -24,7 +25,7 @@ public class HelloServlet extends HttpServlet {
 	private static final long serialVersionUID = 6782169459286299897L;
 
 	@EJB
-	private PersistedBeans temporalRecords;
+	private TemporalRecords temporalRecords;
 
 	@Override
 	protected void doGet(final HttpServletRequest req,
@@ -35,9 +36,7 @@ public class HelloServlet extends HttpServlet {
 		resp.getWriter()
 				.print("<div id='text'>Hello servlet on " + temporalRecords
 						+ "</div>");
-		TemporalRecord record = new TemporalRecord();
-		record.setMessage("Hello world");
-		temporalRecords.save(record);
+		temporalRecords.save("Hello world");
 
 	}
 }
