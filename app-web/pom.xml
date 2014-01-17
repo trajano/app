@@ -33,6 +33,11 @@
 			<artifactId>app-domain</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>net.trajano.app</groupId>
+			<artifactId>custom-domain</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>org.apache.derby</groupId>
 			<artifactId>derby</artifactId>
 			<version>10.10.1.1</version>

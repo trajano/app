@@ -1,4 +1,4 @@
-package net.trajano.app.domain;
+package net.trajano.app.domainx;
 
 import java.util.Date;
 import java.util.UUID;
