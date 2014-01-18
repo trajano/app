@@ -18,24 +18,24 @@ import net.trajano.app.domain.TemporalRecords;
 @WebServlet("/hello")
 public class HelloServlet extends HttpServlet {
 
-	/**
-	 * Serial version UID.
-	 */
-	private static final long serialVersionUID = 6782169459286299897L;
+    /**
+     * Serial version UID.
+     */
+    private static final long serialVersionUID = 6782169459286299897L;
 
-	@EJB
-	private TemporalRecords temporalRecords;
+    @EJB
+    private TemporalRecords temporalRecords;
 
-	@Override
-	protected void doGet(final HttpServletRequest req,
-			final HttpServletResponse resp) throws ServletException,
-			IOException {
-		resp.getWriter().print(
-				"<div id='text'>Hello servlet on " + new Date() + "</div>");
-		resp.getWriter()
-				.print("<div id='text'>Hello servlet on " + temporalRecords
-						+ "</div>");
-		temporalRecords.save("Hello world");
+    @Override
+    protected void doGet(final HttpServletRequest req,
+            final HttpServletResponse resp) throws ServletException,
+            IOException {
+        resp.getWriter().print(
+                "<div id='text'>Hello servlet on " + new Date() + "</div>");
+        resp.getWriter()
+                .print("<div id='text'>Hello servlet on " + temporalRecords
+                        + "</div>");
+        temporalRecords.save("Hello world" + new Date());
 
-	}
+    }
 }
