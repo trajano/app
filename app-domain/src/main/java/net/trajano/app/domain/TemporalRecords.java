@@ -142,15 +142,15 @@ public class TemporalRecords {
 		c.set(Calendar.SECOND, 0);
 		c.set(Calendar.MINUTE, 0);
 		c.set(Calendar.HOUR_OF_DAY, 0);
-		final TypedQuery<TemporalRecord> existingRecordQuery = em
-				.createNamedQuery("TemporalRecord.getByDateAndDate",
-						TemporalRecord.class);
+		final TypedQuery<TemporalString> existingRecordQuery = em
+				.createNamedQuery("TemporalString.getByDateAndDate",
+						TemporalString.class);
 		existingRecordQuery.setParameter("uuidLow",
 				uuid.getLeastSignificantBits());
 		existingRecordQuery.setParameter("uuidHigh",
 				uuid.getMostSignificantBits());
 		existingRecordQuery.setParameter("date", c.getTime());
-		return existingRecordQuery.getSingleResult().getMessage();
+		return existingRecordQuery.getSingleResult().getValue();
 
 	}
 
@@ -189,23 +189,23 @@ public class TemporalRecords {
 		c.set(Calendar.HOUR_OF_DAY, 0);
 		final UUID uuid = UUID
 				.fromString("550e8400-e29b-41d4-a716-446655440000");
-		final TypedQuery<TemporalRecord> existingRecordQuery = em
-				.createNamedQuery("TemporalRecord.getByDateAndEffectiveDate",
-						TemporalRecord.class);
+		final TypedQuery<TemporalString> existingRecordQuery = em
+				.createNamedQuery("TemporalString.getByDateAndEffectiveDate",
+						TemporalString.class);
 		existingRecordQuery.setParameter("uuidLow",
 				uuid.getLeastSignificantBits());
 		existingRecordQuery.setParameter("uuidHigh",
 				uuid.getMostSignificantBits());
 		existingRecordQuery.setParameter("effectiveDate", c.getTime());
-		TemporalRecord bean;
+		TemporalString bean;
 		try {
 			bean = existingRecordQuery.getSingleResult();
 		} catch (final NoResultException e) {
-			bean = new TemporalRecord();
+			bean = new TemporalString();
 			bean.setUuid(uuid);
 			bean.setEffectiveDate(c.getTime());
 		}
-		bean.setMessage(message);
+		bean.setValue(message);
 		// probably use this to determine if the string is enough.
 		// em.getMetamodel().entity(String.class).getAttribute(name)
 		em.persist(bean);
