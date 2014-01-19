@@ -50,7 +50,7 @@ import javax.xml.bind.DatatypeConverter;
 @NamedQueries({
 		@NamedQuery(name = "TemporalString.getByUuidAndDate", query = "select r from TemporalString r where r.uuidLow = :uuidLow and r.uuidHigh = :uuidHigh and r.effectiveDate = (select max(t.effectiveDate) from TemporalString t where t.uuidLow = :uuidLow and t.uuidHigh = :uuidHigh and t.effectiveDate <= :date)"),
 		@NamedQuery(name = "TemporalString.getByDateAndEffectiveDate", query = "select r from TemporalString r where r.uuidLow = :uuidLow and r.uuidHigh = :uuidHigh and r.effectiveDate = :effectiveDate") })
-@Table(uniqueConstraints = { @UniqueConstraint(name = "uuid", columnNames = "uuidLow, uuidHigh, effectivedate") })
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames = "uuidLow, uuidHigh, effectivedate") })
 public class TemporalString {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable = false)

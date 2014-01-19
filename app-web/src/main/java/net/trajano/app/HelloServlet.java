@@ -2,6 +2,7 @@ package net.trajano.app;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.UUID;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -23,6 +24,9 @@ public class HelloServlet extends HttpServlet {
      */
     private static final long serialVersionUID = 6782169459286299897L;
 
+    /**
+     * EJB.
+     */
     @EJB
     private TemporalRecords temporalRecords;
 
@@ -35,7 +39,10 @@ public class HelloServlet extends HttpServlet {
         resp.getWriter()
                 .print("<div id='text'>Hello servlet on " + temporalRecords
                         + "</div>");
-        temporalRecords.save("Hello world" + new Date());
+        final UUID uuid = new UUID(0, hashCode());
+        temporalRecords.put(uuid, "name", "Hello world" + new Date(),
+                new Date());
+        temporalRecords.put(uuid, "age", new Date().getTime(), new Date());
 
     }
 }

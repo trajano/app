@@ -7,6 +7,7 @@
 		<description>Default persistence provider</description>
 		<!-- <jar-file>lib/app-domain-1.0.0-SNAPSHOT.jar</jar-file> -->
 		<!-- <jar-file>lib/custom-domain-1.0.0-SNAPSHOT.jar</jar-file> -->
+		<class>net.trajano.app.domain.TemporalNumber</class>
 		<class>net.trajano.app.domain.TemporalString</class>
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 	</persistence-unit>
