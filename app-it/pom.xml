@@ -107,6 +107,10 @@
 								cargo.datasource.username=APP|
 								cargo.datasource.password=nonemptypassword
 							</cargo.datasource.datasource.derby>
+							<cargo.resource.resource.jmsMyQueue>
+								cargo.resource.name=jms/MyQueue|
+								cargo.resource.type=javax.jms.Queue
+							</cargo.resource.resource.jmsMyQueue>
 						</properties>
 
 						<configfiles>
