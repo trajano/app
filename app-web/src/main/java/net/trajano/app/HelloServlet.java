@@ -10,9 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.ws.WebServiceRef;
 
-import net.webservicex.AccelerationUnit;
-import net.webservicex.AccelerationUnitSoap;
-import net.webservicex.Accelerations;
+import com.w3schools.webservices.TempConvert;
+import com.w3schools.webservices.TempConvertSoap;
 
 /**
  * Hello world servlet.
@@ -28,8 +27,8 @@ public class HelloServlet extends HttpServlet {
     /**
      * Web Service client reference.
      */
-    @WebServiceRef(AccelerationUnit.class)
-    private AccelerationUnitSoap accelerationUnit;
+    @WebServiceRef(TempConvert.class)
+    private TempConvertSoap tempConvert;
 
     @Override
     protected void doGet(final HttpServletRequest req,
@@ -38,10 +37,7 @@ public class HelloServlet extends HttpServlet {
         resp.getWriter().print(
                 "<div id='text'>Hello servlet on " + new Date() + "</div>");
         resp.getWriter().print(
-                "<div id='accel'>1 G is "
-                        + accelerationUnit.changeAccelerationUnit(1.00,
-                                Accelerations.GRAV,
-                                Accelerations.METER_PERSQUARESECOND)
-                        + "m/s^2</div>");
+                "<div id='accel'>312F is "
+                        + tempConvert.fahrenheitToCelsius("312") + "C</div>");
     }
 }
