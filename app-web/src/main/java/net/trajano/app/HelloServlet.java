@@ -3,6 +3,8 @@ package net.trajano.app;
 import java.io.IOException;
 import java.util.Date;
 
+import javax.annotation.Resource;
+import javax.mail.Session;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,6 +27,12 @@ public class HelloServlet extends HttpServlet {
     private static final long serialVersionUID = 6782169459286299897L;
 
     /**
+     * Mail session resource.
+     */
+    @Resource(name = "mail/MyMail")
+    private Session mailSession;
+
+    /**
      * Web Service client reference.
      */
     @WebServiceRef(TempConvert.class)
@@ -37,7 +45,9 @@ public class HelloServlet extends HttpServlet {
         resp.getWriter().print(
                 "<div id='text'>Hello servlet on " + new Date() + "</div>");
         resp.getWriter().print(
-                "<div id='accel'>312F is "
+                "<div id='temp'>312F is "
                         + tempConvert.fahrenheitToCelsius("312") + "C</div>");
+        resp.getWriter().print(
+                "<div id='mail'>mailSession is " + mailSession + "</div>");
     }
 }

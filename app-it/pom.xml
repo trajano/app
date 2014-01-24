@@ -111,6 +111,11 @@
 								cargo.resource.name=jms/MyQueue|
 								cargo.resource.type=javax.jms.Queue
 							</cargo.resource.resource.jmsMyQueue>
+							<cargo.resource.resource.mail>
+								cargo.resource.name=mail/MyMail|
+								cargo.resource.type=javax.mail.Session|
+								cargo.resource.parameters=mail.smtp.host=localhost;mail.smtp.user=user;mail.smtp.from=foo@example.com
+							</cargo.resource.resource.mail>
 						</properties>
 
 						<configfiles>
