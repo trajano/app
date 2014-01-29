@@ -18,6 +18,9 @@ import javax.jms.TextMessage;
         @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue") })
 public class JpaAdder implements MessageListener {
 
+    /**
+     * Injected SLSB.
+     */
     @EJB
     private PersistedBeans persistedBeans;
 
