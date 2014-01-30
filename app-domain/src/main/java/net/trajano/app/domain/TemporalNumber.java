@@ -24,8 +24,9 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  */
 @Entity
 @NamedQueries({
+		@NamedQuery(name = "TemporalNumber.getByUuid", query = "select r from TemporalNumber r where r.uuidLow = :uuidLow and r.uuidHigh = :uuidHigh "),
 		@NamedQuery(name = "TemporalNumber.getByUuidAndDate", query = "select r from TemporalNumber r where r.uuidLow = :uuidLow and r.uuidHigh = :uuidHigh and r.effectiveDate = (select max(t.effectiveDate) from TemporalNumber t where t.uuidLow = :uuidLow and t.uuidHigh = :uuidHigh and t.effectiveDate <= :date)"),
-		@NamedQuery(name = "TemporalNumber.getByDateAndEffectiveDate", query = "select r from TemporalNumber r where r.uuidLow = :uuidLow and r.uuidHigh = :uuidHigh and r.effectiveDate = :effectiveDate") })
+		@NamedQuery(name = "TemporalNumber.getByUuidAndEffectiveDate", query = "select r from TemporalNumber r where r.uuidLow = :uuidLow and r.uuidHigh = :uuidHigh and r.effectiveDate = :effectiveDate") })
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = "uuidLow, uuidHigh, effectivedate") })
 public class TemporalNumber {
 	@Temporal(TemporalType.TIMESTAMP)

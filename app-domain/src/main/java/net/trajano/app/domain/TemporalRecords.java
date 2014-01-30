@@ -13,6 +13,10 @@ import javax.persistence.TypedQuery;
 /**
  * SLSB to manage persisted classes. This would be the table model.
  * 
+ * TODO take in a column that represents a table name? NO, just use actual
+ * database tables. That means somehow we have to make this generic so we can
+ * add tables easily.
+ * 
  * @author Archimedes Trajano
  */
 @Stateless
@@ -37,7 +41,7 @@ public class TemporalRecords {
 	 * How do I separate personally identifiable data from the transactional
 	 * data? I know I separate it into two XML lobs that's for sure.
 	 * 
-	 * Something like Personal info (with expiratation data) and (non-personal
+	 * Something like Personal info (with expiration data) and (non-personal
 	 * information) there's a link between them somehow.
 	 * 
 	 * There is temporal data for a person, namely address and phone number that
@@ -77,7 +81,7 @@ public class TemporalRecords {
 	 * data must be archived or destroyed over time
 	 * 
 	 * Data can go to the person or the case. Actually there is no such thing as
-	 * the above. Personally identifiable data is never used for calculationl
+	 * the above. Personally identifiable data is never used for calculations
 	 * all subject related data is stored?
 	 * 
 	 * Or perhaps not, some things are case related and only valid for the
@@ -131,6 +135,13 @@ public class TemporalRecords {
 	 * through JDBC directly. Perhaps I would add explicit tables for this one
 	 * that are not part of the JPA?
 	 * 
+	 * Also we have to consider moving data to a graveyard store. The graveyard
+	 * can be cleared off as needed.
+	 * 
+	 * There should be no concept of in-edit, but there can be concept of a user
+	 * workspace where the user can modify their data before commiting it to the
+	 * temporal data store.
+	 * 
 	 * @param uuid
 	 * @param date
 	 * @return
@@ -150,7 +161,7 @@ public class TemporalRecords {
 	}
 
 	/**
-	 * Store a number into a field. Effectively this will be stoted in its own
+	 * Store a number into a field. Effectively this will be stored in its own
 	 * table. There is a table for each basic type and one for a complex type.
 	 * The table model will redirect accordingly.
 	 * 
@@ -171,7 +182,7 @@ public class TemporalRecords {
 			final Date effectiveDate) {
 		final Date theDate = stripTime(effectiveDate);
 		final TypedQuery<TemporalNumber> existingRecordQuery = em
-				.createNamedQuery("TemporalNumber.getByDateAndEffectiveDate",
+				.createNamedQuery("TemporalNumber.getByUuidAndEffectiveDate",
 						TemporalNumber.class);
 		existingRecordQuery.setParameter("uuidLow",
 				uuid.getLeastSignificantBits());
@@ -181,6 +192,7 @@ public class TemporalRecords {
 		TemporalNumber bean;
 		try {
 			bean = existingRecordQuery.getSingleResult();
+			// result was found, copy existing record data to graveyard.
 		} catch (final NoResultException e) {
 			System.out.println("NOT FOUND?" + uuid + " " + theDate);
 			bean = new TemporalNumber();
@@ -193,11 +205,12 @@ public class TemporalRecords {
 		em.flush();
 		em.refresh(bean);
 	}
+
 	public void put(final UUID uuid, final String name, final String value,
 			final Date effectiveDate) {
 		final Date theDate = stripTime(effectiveDate);
 		final TypedQuery<TemporalString> existingRecordQuery = em
-				.createNamedQuery("TemporalString.getByDateAndEffectiveDate",
+				.createNamedQuery("TemporalString.getByUuidAndEffectiveDate",
 						TemporalString.class);
 		existingRecordQuery.setParameter("uuidLow",
 				uuid.getLeastSignificantBits());
@@ -207,6 +220,7 @@ public class TemporalRecords {
 		TemporalString bean;
 		try {
 			bean = existingRecordQuery.getSingleResult();
+			// result was found, copy existing record data to graveyard.
 		} catch (final NoResultException e) {
 			System.out.println("NOT FOUND?" + uuid + " " + theDate);
 			bean = new TemporalString();
@@ -220,20 +234,48 @@ public class TemporalRecords {
 		em.refresh(bean);
 	}
 
-	private Date stripTime(final Date effectiveDate) {
-		final Calendar c = Calendar.getInstance();
-		c.setTimeInMillis(effectiveDate.getTime());
-		c.set(Calendar.MILLISECOND, 0);
-		c.set(Calendar.SECOND, 0);
-		c.set(Calendar.MINUTE, 0);
-		c.set(Calendar.HOUR_OF_DAY, 0);
-		return c.getTime();
+	/**
+	 * Removes temporal data by UUID. All data in the temporal tables whose UUID
+	 * matches will be deleted. The data will be moved to the graveyard tables.
+	 * 
+	 * @param uuid
+	 *            UUID of temporal data to delete.
+	 */
+	public void remove(final UUID uuid) {
+		final TypedQuery<TemporalString> strings = em
+				.createNamedQuery("TemporalString.getByUuid",
+						TemporalString.class);
+		strings.setParameter("uuidLow",
+				uuid.getLeastSignificantBits());
+		strings.setParameter("uuidHigh",
+				uuid.getMostSignificantBits());
+
+		for (final TemporalString temporalString : strings
+				.getResultList()) {
+			// TODO copy record to graveyard
+			em.remove(temporalString);
+		}
+
+		final TypedQuery<TemporalNumber> numbers = em
+				.createNamedQuery("TemporalNumber.getByUuid",
+						TemporalNumber.class);
+		numbers.setParameter("uuidLow",
+				uuid.getLeastSignificantBits());
+		numbers.setParameter("uuidHigh",
+				uuid.getMostSignificantBits());
+		for (final TemporalNumber temporalNumber : numbers
+				.getResultList()) {
+			// TODO copy record to graveyard
+			em.remove(temporalNumber);
+		}
 	}
 
+	@Deprecated
 	public void save(final String string) {
 		save(string, new Date());
 	}
 
+	@Deprecated
 	public void save(final String message, final Date effectiveDate) {
 		final Date theDate = stripTime(effectiveDate);
 		final UUID uuid = UUID
@@ -262,7 +304,6 @@ public class TemporalRecords {
 		em.refresh(bean);
 	}
 
-	// todo remove will remove entire uuid
 	/**
 	 * Injects the entity manager for testing.
 	 * 
@@ -271,5 +312,15 @@ public class TemporalRecords {
 	 */
 	public void setEntityManager(final EntityManager entityManager) {
 		em = entityManager;
+	}
+
+	private Date stripTime(final Date effectiveDate) {
+		final Calendar c = Calendar.getInstance();
+		c.setTimeInMillis(effectiveDate.getTime());
+		c.set(Calendar.MILLISECOND, 0);
+		c.set(Calendar.SECOND, 0);
+		c.set(Calendar.MINUTE, 0);
+		c.set(Calendar.HOUR_OF_DAY, 0);
+		return c.getTime();
 	}
 }
