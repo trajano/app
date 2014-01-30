@@ -149,7 +149,7 @@ public class TemporalRecords {
 	public String getByUuidAndDate(final UUID uuid, final Date date) {
 		final Date theDate = stripTime(date);
 		final TypedQuery<TemporalString> existingRecordQuery = em
-				.createNamedQuery("TemporalString.getByDateAndDate",
+				.createNamedQuery("TemporalRecord.getByDateAndDate",
 						TemporalString.class);
 		existingRecordQuery.setParameter("uuidLow",
 				uuid.getLeastSignificantBits());
@@ -182,7 +182,7 @@ public class TemporalRecords {
 			final Date effectiveDate) {
 		final Date theDate = stripTime(effectiveDate);
 		final TypedQuery<TemporalNumber> existingRecordQuery = em
-				.createNamedQuery("TemporalNumber.getByUuidAndEffectiveDate",
+				.createNamedQuery("TemporalRecord.getByUuidAndEffectiveDate",
 						TemporalNumber.class);
 		existingRecordQuery.setParameter("uuidLow",
 				uuid.getLeastSignificantBits());
@@ -210,7 +210,7 @@ public class TemporalRecords {
 			final Date effectiveDate) {
 		final Date theDate = stripTime(effectiveDate);
 		final TypedQuery<TemporalString> existingRecordQuery = em
-				.createNamedQuery("TemporalString.getByUuidAndEffectiveDate",
+				.createNamedQuery("TemporalRecord.getByUuidAndEffectiveDate",
 						TemporalString.class);
 		existingRecordQuery.setParameter("uuidLow",
 				uuid.getLeastSignificantBits());
@@ -243,7 +243,7 @@ public class TemporalRecords {
 	 */
 	public void remove(final UUID uuid) {
 		final TypedQuery<TemporalString> strings = em
-				.createNamedQuery("TemporalString.getByUuid",
+				.createNamedQuery("TemporalRecord.getByUuid",
 						TemporalString.class);
 		strings.setParameter("uuidLow",
 				uuid.getLeastSignificantBits());
@@ -257,7 +257,8 @@ public class TemporalRecords {
 		}
 
 		final TypedQuery<TemporalNumber> numbers = em
-				.createNamedQuery("TemporalNumber.getByUuid",
+.createNamedQuery(
+				"TemporalRecord.getByUuid",
 						TemporalNumber.class);
 		numbers.setParameter("uuidLow",
 				uuid.getLeastSignificantBits());
@@ -281,7 +282,7 @@ public class TemporalRecords {
 		final UUID uuid = UUID
 				.fromString("550e8400-e29b-41d4-a716-446655440000");
 		final TypedQuery<TemporalString> existingRecordQuery = em
-				.createNamedQuery("TemporalString.getByDateAndEffectiveDate",
+				.createNamedQuery("TemporalRecord.getByDateAndEffectiveDate",
 						TemporalString.class);
 		existingRecordQuery.setParameter("uuidLow",
 				uuid.getLeastSignificantBits());

@@ -3,23 +3,11 @@ package net.trajano.app.domain;
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.UniqueConstraint;
 import javax.xml.bind.DatatypeConverter;
 
-// a secondary entity called superceded temporal records stores temporal records that have been superseded.  Only active ones are here.
 /**
  * Active temporal string data used to store limited string types, arbitrary
  * precision decimal numbers, date, time and dateTime values.
@@ -45,76 +33,17 @@ import javax.xml.bind.DatatypeConverter;
  * 
  * The type is not stored here. The schema will know what type is needed to
  * present to the user.
- * 
- * TODO inheritance of temporal data so we can reuse the same query.
  */
 @Entity
-@NamedQueries({
-		@NamedQuery(name = "TemporalString.getByUuid", query = "select r from TemporalString r where r.uuidLow = :uuidLow and r.uuidHigh = :uuidHigh"),
-		@NamedQuery(name = "TemporalString.getByUuidAndDate", query = "select r from TemporalString r where r.uuidLow = :uuidLow and r.uuidHigh = :uuidHigh and r.effectiveDate = (select max(t.effectiveDate) from TemporalString t where t.uuidLow = :uuidLow and t.uuidHigh = :uuidHigh and t.effectiveDate <= :date)"),
-		@NamedQuery(name = "TemporalString.getByUuidAndEffectiveDate", query = "select r from TemporalString r where r.uuidLow = :uuidLow and r.uuidHigh = :uuidHigh and r.effectiveDate = :effectiveDate") })
-@Table(uniqueConstraints = { @UniqueConstraint(columnNames = "uuidLow, uuidHigh, effectivedate") })
-public class TemporalString {
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(nullable = false)
-	private Date createdOn;
+public class TemporalString extends TemporalRecord {
 
 	/**
-	 * Date. TODO this may not work because of timezone issues.
-	 */
-	@Temporal(TemporalType.DATE)
-	@Column(nullable = false)
-	private Date effectiveDate;
-	/**
-	 * ID.
-	 */
-	@Id
-	@GeneratedValue
-	private long id;
-
-	/**
-	 * Audit purposes, who wrote the last record.
-	 */
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date lastWrittenBy;
-
-	/**
-	 * Audit purposes, when the record was last written. TODO push up.
-	 */
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(nullable = false)
-	private Date lastWrittenOn;
-	/**
-	 * Lookup key. Most significant bits of UUID.
-	 */
-	@Column(nullable = false)
-	private long uuidHigh;
-
-	/**
-	 * Lookup key. Least significant bits of UUID.
-	 */
-	@Column(nullable = false)
-	private long uuidLow;
-
-	/**
-	 * Value. The length may be overriden in persistence.xml and orm.xml. For
+	 * Value. The length may be overridden in persistence.xml and orm.xml. For
 	 * theoretical efficiency reasons, a conservative value of 512 was chosen
 	 * for the length.
 	 */
 	@Column(nullable = false, length = 512)
 	private String value;
-
-	public Date getEffectiveDate() {
-		return effectiveDate;
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public UUID getUuid() {
-		return new UUID(uuidHigh, uuidLow);
-	}
 
 	public String getValue() {
 		return value;
@@ -152,23 +81,10 @@ public class TemporalString {
 		value = DatatypeConverter.printDate(c);
 	}
 
-	public void setEffectiveDate(final Date effectiveDate) {
-		this.effectiveDate = effectiveDate;
-	}
-
-	public void setId(final long id) {
-		this.id = id;
-	}
-
 	public void setTimeValue(final Date date) {
 		final Calendar c = Calendar.getInstance();
 		c.setTimeInMillis(date.getTime());
 		value = DatatypeConverter.printTime(c);
-	}
-
-	public void setUuid(final UUID uuid) {
-		uuidLow = uuid.getLeastSignificantBits();
-		uuidHigh = uuid.getMostSignificantBits();
 	}
 
 	// TODO URI
@@ -176,13 +92,4 @@ public class TemporalString {
 	public void setValue(final String value) {
 		this.value = value;
 	}
-
-	@PrePersist
-	@PreUpdate
-	protected void updateAuditFields() {
-		createdOn = createdOn == null ? new Date() : createdOn;
-		lastWrittenOn = new Date();
-		System.out.println("UPDATEING AUDIT TIMESTAMP TO " + lastWrittenOn);
-	}
-
 }
