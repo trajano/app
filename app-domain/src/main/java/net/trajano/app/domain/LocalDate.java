@@ -12,27 +12,7 @@ import java.util.Date;
  * 
  */
 public class LocalDate implements Comparable<LocalDate> {
-	private final int date;
-
-	public LocalDate(int year, int month, int day) {
-		date = year * 10000 + month * 100 + day;
-	}
-
-	public LocalDate(Date javaDate) {
-		Calendar c = Calendar.getInstance();
-		c.setTimeInMillis(javaDate.getTime());
-		int year = c.get(Calendar.YEAR);
-		int month = c.get(Calendar.MONTH) + 1;
-		int day = c.get(Calendar.DAY_OF_MONTH);
-		date = year * 10000 + month * 100 + day;
-	}
-
-	public LocalDate(Calendar c) {
-		int year = c.get(Calendar.YEAR);
-		int month = c.get(Calendar.MONTH) + 1;
-		int day = c.get(Calendar.DAY_OF_MONTH);
-		date = year * 10000 + month * 100 + day;
-	}
+	private static LocalDate overrideCurrentDate = null;
 
 	/**
 	 * Get current local date.
@@ -47,34 +27,58 @@ public class LocalDate implements Comparable<LocalDate> {
 		}
 	}
 
-	public static void overrideCurrentDate(LocalDate localDate) {
+	public static void overrideCurrentDate(final LocalDate localDate) {
 		overrideCurrentDate = localDate;
 	}
 
-	private static LocalDate overrideCurrentDate = null;
+	private final int date;
 
-	@Override
-	public int hashCode() {
-		return date;
+	public LocalDate(final Calendar c) {
+		final int year = c.get(Calendar.YEAR);
+		final int month = c.get(Calendar.MONTH) + 1;
+		final int day = c.get(Calendar.DAY_OF_MONTH);
+		date = year * 10000 + month * 100 + day;
+	}
+
+	public LocalDate(final Date javaDate) {
+		final Calendar c = Calendar.getInstance();
+		c.setTimeInMillis(javaDate.getTime());
+		final int year = c.get(Calendar.YEAR);
+		final int month = c.get(Calendar.MONTH) + 1;
+		final int day = c.get(Calendar.DAY_OF_MONTH);
+		date = year * 10000 + month * 100 + day;
+	}
+
+	public LocalDate(final int year, final int month, final int day) {
+		date = year * 10000 + month * 100 + day;
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
+	public int compareTo(final LocalDate o) {
+		return date - o.date;
+	}
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
-		LocalDate other = (LocalDate) obj;
-		if (date != other.date)
+		}
+		final LocalDate other = (LocalDate) obj;
+		if (date != other.date) {
 			return false;
+		}
 		return true;
 	}
 
 	@Override
-	public int compareTo(LocalDate o) {
-		return date - o.date;
+	public int hashCode() {
+		return date;
 	}
 
 }

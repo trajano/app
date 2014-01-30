@@ -13,6 +13,12 @@ import javax.persistence.TemporalType;
 // TODO namedquery getByDate
 public class Participant {
 	/**
+	 * Date.
+	 */
+	@Temporal(TemporalType.DATE)
+	private Date effectiveDate;
+
+	/**
 	 * ID.
 	 */
 	@Id
@@ -20,51 +26,45 @@ public class Participant {
 	private long id;
 
 	/**
-	 * Lookup key.
-	 */
-	private UUID uuid;
-
-	/**
 	 * Message.
 	 */
 	private String message;
 
 	/**
-	 * Date.
+	 * Lookup key.
 	 */
-	@Temporal(TemporalType.DATE)
-	private Date effectiveDate;
+	private UUID uuid;
+
+	public Date getEffectiveDate() {
+		return effectiveDate;
+	}
 
 	public long getId() {
 		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public UUID getUuid() {
-		return uuid;
-	}
-
-	public void setUuid(UUID uuid) {
-		this.uuid = uuid;
 	}
 
 	public String getMessage() {
 		return message;
 	}
 
-	public void setMessage(String message) {
+	public UUID getUuid() {
+		return uuid;
+	}
+
+	public void setEffectiveDate(final Date effectiveDate) {
+		this.effectiveDate = effectiveDate;
+	}
+
+	public void setId(final long id) {
+		this.id = id;
+	}
+
+	public void setMessage(final String message) {
 		this.message = message;
 	}
 
-	public Date getEffectiveDate() {
-		return effectiveDate;
-	}
-
-	public void setEffectiveDate(Date effectiveDate) {
-		this.effectiveDate = effectiveDate;
+	public void setUuid(final UUID uuid) {
+		this.uuid = uuid;
 	}
 
 }

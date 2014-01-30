@@ -242,30 +242,21 @@ public class TemporalRecords {
 	 *            UUID of temporal data to delete.
 	 */
 	public void remove(final UUID uuid) {
-		final TypedQuery<TemporalString> strings = em
-				.createNamedQuery("TemporalRecord.getByUuid",
-						TemporalString.class);
-		strings.setParameter("uuidLow",
-				uuid.getLeastSignificantBits());
-		strings.setParameter("uuidHigh",
-				uuid.getMostSignificantBits());
+		final TypedQuery<TemporalString> strings = em.createNamedQuery(
+				"TemporalRecord.getByUuid", TemporalString.class);
+		strings.setParameter("uuidLow", uuid.getLeastSignificantBits());
+		strings.setParameter("uuidHigh", uuid.getMostSignificantBits());
 
-		for (final TemporalString temporalString : strings
-				.getResultList()) {
+		for (final TemporalString temporalString : strings.getResultList()) {
 			// TODO copy record to graveyard
 			em.remove(temporalString);
 		}
 
-		final TypedQuery<TemporalNumber> numbers = em
-.createNamedQuery(
-				"TemporalRecord.getByUuid",
-						TemporalNumber.class);
-		numbers.setParameter("uuidLow",
-				uuid.getLeastSignificantBits());
-		numbers.setParameter("uuidHigh",
-				uuid.getMostSignificantBits());
-		for (final TemporalNumber temporalNumber : numbers
-				.getResultList()) {
+		final TypedQuery<TemporalNumber> numbers = em.createNamedQuery(
+				"TemporalRecord.getByUuid", TemporalNumber.class);
+		numbers.setParameter("uuidLow", uuid.getLeastSignificantBits());
+		numbers.setParameter("uuidHigh", uuid.getMostSignificantBits());
+		for (final TemporalNumber temporalNumber : numbers.getResultList()) {
 			// TODO copy record to graveyard
 			em.remove(temporalNumber);
 		}

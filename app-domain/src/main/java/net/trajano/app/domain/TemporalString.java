@@ -71,6 +71,14 @@ public class TemporalString extends TemporalRecord {
 		return DatatypeConverter.parseTime(value).getTime();
 	}
 
+	public URI getValueAsUri() {
+		return URI.create(value);
+	}
+
+	public UUID getValueAsUuid() {
+		return UUID.fromString(value);
+	}
+
 	public void setDateTimeValue(final Date date) {
 		final Calendar c = Calendar.getInstance();
 		c.setTimeInMillis(date.getTime());
@@ -95,18 +103,11 @@ public class TemporalString extends TemporalRecord {
 		this.value = value;
 	}
 
-	public void setValue(URI uri) {
+	public void setValue(final URI uri) {
 		value = uri.toASCIIString();
-	}
-	public URI getValueAsUri() {
-		return URI.create(value);
-	}
-
-	public UUID getValueAsUuid() {
-		return UUID.fromString(value);
 	}
 
 	public void setValue(final UUID uuid) {
-		this.value = uuid.toString();
+		value = uuid.toString();
 	}
 }

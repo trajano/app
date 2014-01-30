@@ -98,16 +98,16 @@ public abstract class TemporalRecord {
 		uuidHigh = uuid.getMostSignificantBits();
 	}
 
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this);
+	}
+
 	@PrePersist
 	@PreUpdate
 	protected void updateAuditFields() {
 		createdOn = createdOn == null ? new Date() : createdOn;
 		lastWrittenOn = new Date();
 		System.out.println("UPDATEING AUDIT TIMESTAMP TO " + lastWrittenOn);
-	}
-
-	@Override
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this);
 	}
 }

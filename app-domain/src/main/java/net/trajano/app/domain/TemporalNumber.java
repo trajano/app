@@ -26,7 +26,7 @@ public class TemporalNumber extends TemporalRecord {
 		return value != 0;
 	}
 
-	public void setValue(boolean b) {
+	public void setValue(final boolean b) {
 		value = b ? 1 : 0;
 	}
 
