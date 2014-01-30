@@ -1,8 +1,10 @@
 package net.trajano.app.domain;
 
 import java.math.BigDecimal;
+import java.net.URI;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -91,5 +93,20 @@ public class TemporalString extends TemporalRecord {
 	// TODO UUID
 	public void setValue(final String value) {
 		this.value = value;
+	}
+
+	public void setValue(URI uri) {
+		value = uri.toASCIIString();
+	}
+	public URI getValueAsUri() {
+		return URI.create(value);
+	}
+
+	public UUID getValueAsUuid() {
+		return UUID.fromString(value);
+	}
+
+	public void setValue(final UUID uuid) {
+		this.value = uuid.toString();
 	}
 }
