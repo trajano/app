@@ -43,11 +43,13 @@ public class HelloServlet extends HttpServlet {
             final HttpServletResponse resp) throws ServletException,
             IOException {
         resp.getWriter().print(
-                "<div id='text'>Hello servlet on " + new Date() + "</div>");
+                String.format("<div id='text'>Hello servlet on %s</div>",
+                        new Date()));
         resp.getWriter().print(
-                "<div id='temp'>312F is "
-                        + tempConvert.fahrenheitToCelsius("312") + "C</div>");
+                String.format("<div id='temp'>312F is %sC</div>",
+                        tempConvert.fahrenheitToCelsius("312")));
         resp.getWriter().print(
-                "<div id='mail'>mailSession is " + mailSession + "</div>");
+                String.format("<div id='mail'>mailSession is %s</div>",
+                        mailSession));
     }
 }
