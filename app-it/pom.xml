@@ -83,7 +83,7 @@
 			<plugin>
 				<groupId>org.codehaus.cargo</groupId>
 				<artifactId>cargo-maven2-plugin</artifactId>
-				<version>1.4.7</version>
+				<version>1.4.8-SNAPSHOT</version>
 				<configuration>
 					<configuration>
 						<properties>
@@ -116,24 +116,12 @@
 								cargo.resource.type=javax.mail.Session|
 								cargo.resource.parameters=mail.smtp.host=localhost;mail.smtp.user=user;mail.smtp.from=foo@example.com
 							</cargo.resource.resource.mail>
+							<cargo.servlet.users>
+								trajano:trajano:users,admins|
+								admin:password:admins|
+								user:password:users
+							</cargo.servlet.users>
 						</properties>
-
-						<configfiles>
-							<configfile>
-								<file>${basedir}/src/main/cargo/keyfile</file>
-								<todir>cargo-domain/config/</todir>
-								<overwrite>true</overwrite>
-							</configfile>
-						</configfiles>
-
-						<xmlReplacements>
-							<xmlReplacement>
-								<file>cargo-domain/config/domain.xml</file>
-								<xpathExpression>//security-service</xpathExpression>
-								<attributeName>activate-default-principal-to-role-mapping</attributeName>
-								<value>true</value>
-							</xmlReplacement>
-						</xmlReplacements>
 					</configuration>
 					<container>
 						<containerId>glassfish4x</containerId>
@@ -172,7 +160,7 @@
 					<dependency>
 						<groupId>org.codehaus.cargo</groupId>
 						<artifactId>cargo-core-container-glassfish</artifactId>
-						<version>1.4.7-SNAPSHOT</version>
+						<version>1.4.8-SNAPSHOT</version>
 					</dependency>
 				</dependencies>
 			</plugin>
