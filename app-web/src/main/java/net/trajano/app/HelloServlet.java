@@ -19,12 +19,8 @@ import com.w3schools.webservices.TempConvertSoap;
  * Hello world servlet.
  */
 @WebServlet("/hello")
+@SuppressWarnings("serial")
 public class HelloServlet extends HttpServlet {
-
-    /**
-     * Serial version UID.
-     */
-    private static final long serialVersionUID = 6782169459286299897L;
 
     /**
      * Mail session resource.
@@ -38,6 +34,9 @@ public class HelloServlet extends HttpServlet {
     @WebServiceRef(TempConvert.class)
     private TempConvertSoap tempConvert;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void doGet(final HttpServletRequest req,
             final HttpServletResponse resp) throws ServletException,
