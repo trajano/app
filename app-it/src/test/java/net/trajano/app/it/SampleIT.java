@@ -3,7 +3,7 @@ package net.trajano.app.it;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.core.StringStartsWith.startsWith;
 import static org.junit.Assert.assertThat;
-import static org.openqa.selenium.support.ui.ExpectedConditions.textToBePresentInElement;
+import static org.openqa.selenium.support.ui.ExpectedConditions.textToBePresentInElementLocated;
 
 import java.io.IOException;
 
@@ -42,13 +42,15 @@ public class SampleIT {
     public void testRest() throws Exception {
         context.authenticate();
         context.open();
-        context.getWait()
-                .until(textToBePresentInElement(By.id("bean-message"),
-                        "Hello JAX-RS"));
         context.getWait().until(
-                textToBePresentInElement(By.id("cdi-message"), "Hello CDI"));
+                textToBePresentInElementLocated(By.id("bean-message"),
+                "Hello JAX-RS"));
         context.getWait().until(
-                textToBePresentInElement(By.id("jpa-message"), "Hello JPA"));
+                textToBePresentInElementLocated(By.id("cdi-message"),
+                        "Hello CDI"));
+        context.getWait().until(
+                textToBePresentInElementLocated(By.id("jpa-message"),
+                        "Hello JPA"));
 
         assertThat(context.getDriver().findElement(By.id("bean-attribute"))
                 .getText(), is("bean"));
