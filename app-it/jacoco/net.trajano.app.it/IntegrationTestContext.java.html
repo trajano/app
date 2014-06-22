@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>IntegrationTestContext.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Integration tests</a> &gt; <a href="index.source.html" class="el_package">net.trajano.app.it</a> &gt; <span class="el_source">IntegrationTestContext.java</span></div><h1>IntegrationTestContext.java</h1><pre class="source lang-java linenums">package net.trajano.app.it;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+/**
+ * Contains the Selenium Driver and Wait objects used for testing.
+ * 
+ * @author Archimedes Trajano
+ */
+public class IntegrationTestContext implements AutoCloseable {
+    /**
+     * Web driver used for testing.
+     */
+    private final WebDriver driver;
+
+    /**
+     * URL Properties.
+     */
+    private final Properties urlProperties;
+
+    /**
+     * Web driver wait object to allow waiting for conditions to occur.
+     */
+    private final WebDriverWait wait;
+
+    /**
+     * Initializes the {@link WebDriver} and {@link WebDriverWait}. Uses Firefox
+     * as it is readily available.
+     * 
+     * @throws IOException
+     */
+<span class="fc" id="L39">    public IntegrationTestContext() throws IOException {</span>
+<span class="fc" id="L40">        final FirefoxProfile firefoxProfile = new FirefoxProfile();</span>
+<span class="fc" id="L41">        firefoxProfile.setAcceptUntrustedCertificates(true);</span>
+<span class="fc" id="L42">        driver = new FirefoxDriver(firefoxProfile);</span>
+<span class="fc" id="L43">        wait = new WebDriverWait(driver, WebDriverWait.DEFAULT_SLEEP_TIMEOUT);</span>
+<span class="fc" id="L44">        urlProperties = new Properties();</span>
+<span class="pc" id="L45">        try (final InputStream is = getClass().getResourceAsStream(</span>
+                &quot;Urls.properties&quot;)) {
+<span class="fc" id="L47">            urlProperties.load(is);</span>
+<span class="pc bpc" id="L48" title="6 of 8 branches missed.">        }</span>
+
+<span class="fc" id="L50">    }</span>
+
+    /**
+     * Authenticates the current browser session.
+     */
+    public void authenticate() {
+<span class="fc" id="L56">        driver.get(urlProperties.getProperty(&quot;authenticate&quot;));</span>
+<span class="fc" id="L57">    }</span>
+
+    /**
+     * Terminates the {@link WebDriver}.
+     */
+    @Override
+    public void close() {
+<span class="fc" id="L64">        driver.quit();</span>
+<span class="fc" id="L65">    }</span>
+
+    public WebDriver getDriver() {
+<span class="fc" id="L68">        return driver;</span>
+    }
+
+    public WebDriverWait getWait() {
+<span class="fc" id="L72">        return wait;</span>
+    }
+
+    /**
+     * Opens up the main page of the app.
+     */
+    public void open() {
+<span class="fc" id="L79">        driver.get(urlProperties.getProperty(&quot;base&quot;));</span>
+<span class="fc" id="L80">    }</span>
+
+    /**
+     * Opens up the servlet.
+     */
+    public void openServlet() {
+<span class="fc" id="L86">        driver.get(urlProperties.getProperty(&quot;servlet&quot;));</span>
+<span class="fc" id="L87">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>
