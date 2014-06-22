@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>SomeWeb.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Web App</a> &gt; <a href="index.source.html" class="el_package">net.trajano.app</a> &gt; <span class="el_source">SomeWeb.java</span></div><h1>SomeWeb.java</h1><pre class="source lang-java linenums">package net.trajano.app;
+
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
+import javax.ejb.EJB;
+import javax.jws.Oneway;
+import javax.jws.WebService;
+
+import net.trajano.app.schema.MessageBean;
+
+/**
+ * Web service endpoint example. The {@link WebService#targetNamespace()} is
+ * defined to conform with enterprise standards. No WSDL file was used because
+ * web services methods are easier to write and define in Java code. However,
+ * the message data should be in XSDs. Note that &quot;Service&quot; gets appended to the
+ * name of the class.
+ * 
+ * @author Archimedes
+ */
+@WebService(targetNamespace = &quot;http://app.trajano.net/ws&quot;)
+<span class="nc" id="L22">public class SomeWeb {</span>
+    /**
+     * Persisted beans table model.
+     */
+    @EJB
+    private PersistedBeans persistedBeans;
+
+    /**
+     * Echos back the input input string.
+     * 
+     * @param s
+     *            input string
+     * @return the input string
+     */
+    public String echo(final String s) {
+<span class="nc" id="L37">        return s;</span>
+    }
+
+    /**
+     * Echos back the original message data.
+     * 
+     * @param messageBean
+     *            message bean.
+     * @return the input message bean.
+     */
+    public MessageBean echoMessage(final MessageBean messageBean) {
+<span class="nc" id="L48">        return messageBean;</span>
+    }
+
+    /**
+     * Gets a bean by ID.
+     * 
+     * @param id
+     *            id of bean to retrieve
+     * @return persisted bean
+     */
+    public MessageBean getBean(final long id) {
+<span class="nc" id="L59">        return mapPersistedBeanToMessageBean(persistedBeans.get(id));</span>
+    }
+
+    /**
+     * Gets the latest stored persisted bean.
+     * 
+     * @return latest stored persisted bean.
+     */
+    public MessageBean getLatest() {
+<span class="nc" id="L68">        return mapPersistedBeanToMessageBean(persistedBeans.getLatest());</span>
+    }
+
+    /**
+     * Maps a persisted bean to a message bean.
+     * 
+     * @param persistedBean
+     *            persisted bean.
+     * @return message bean
+     */
+    private MessageBean mapPersistedBeanToMessageBean(
+            final PersistedBean persistedBean) {
+<span class="nc" id="L80">        final MessageBean ret = new MessageBean();</span>
+<span class="nc" id="L81">        ret.setMessage(persistedBean.getMessage());</span>
+<span class="nc" id="L82">        final Calendar c = new GregorianCalendar();</span>
+<span class="nc" id="L83">        c.setTime(persistedBean.getDate());</span>
+<span class="nc" id="L84">        ret.setTimestamp(c);</span>
+<span class="nc" id="L85">        return ret;</span>
+    }
+
+    /**
+     * Saves the message bean data into a persisted bean.
+     * 
+     * @param messageBean
+     *            data to persist
+     */
+    @Oneway
+    public void persistBean(final MessageBean messageBean) {
+<span class="nc" id="L96">        final PersistedBean persistedBean = new PersistedBean();</span>
+<span class="nc" id="L97">        persistedBean.setMessage(messageBean.getMessage());</span>
+<span class="nc" id="L98">        persistedBean.setSomeDate(messageBean.getTimestamp().getTime());</span>
+<span class="nc" id="L99">        persistedBean.setSomeTime(messageBean.getTimestamp().getTime());</span>
+<span class="nc" id="L100">        persistedBean.setSomeTimestamp(messageBean.getTimestamp().getTime());</span>
+<span class="nc" id="L101">        persistedBeans.save(persistedBean);</span>
+<span class="nc" id="L102">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>HelloServlet.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Web App</a> &gt; <a href="index.source.html" class="el_package">net.trajano.app</a> &gt; <span class="el_source">HelloServlet.java</span></div><h1>HelloServlet.java</h1><pre class="source lang-java linenums">package net.trajano.app;
+
+import java.io.IOException;
+import java.util.Date;
+
+import javax.annotation.Resource;
+import javax.mail.Session;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.xml.ws.WebServiceRef;
+
+import com.w3schools.webservices.TempConvert;
+import com.w3schools.webservices.TempConvertSoap;
+
+/**
+ * Hello world servlet.
+ */
+@WebServlet(&quot;/hello&quot;)
+@SuppressWarnings(&quot;serial&quot;)
+<span class="nc" id="L23">public class HelloServlet extends HttpServlet {</span>
+
+    /**
+     * Mail session resource.
+     */
+    @Resource(name = &quot;mail/MyMail&quot;)
+    private Session mailSession;
+
+    /**
+     * Web Service client reference.
+     */
+    @WebServiceRef(TempConvert.class)
+    private TempConvertSoap tempConvert;
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void doGet(final HttpServletRequest req,
+            final HttpServletResponse resp) throws ServletException,
+            IOException {
+<span class="nc" id="L44">        resp.getWriter().print(</span>
+                String.format(&quot;&lt;div id='text'&gt;Hello servlet on %s&lt;/div&gt;&quot;,
+                        new Date()));
+<span class="nc" id="L47">        resp.getWriter().print(</span>
+                String.format(&quot;&lt;div id='temp'&gt;312F is %sC&lt;/div&gt;&quot;,
+                        tempConvert.fahrenheitToCelsius(&quot;312&quot;)));
+<span class="nc" id="L50">        resp.getWriter().print(</span>
+                String.format(&quot;&lt;div id='mail'&gt;mailSession is %s&lt;/div&gt;&quot;,
+                        mailSession));
+<span class="nc" id="L53">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

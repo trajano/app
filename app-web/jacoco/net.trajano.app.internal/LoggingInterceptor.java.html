@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>LoggingInterceptor.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Web App</a> &gt; <a href="index.source.html" class="el_package">net.trajano.app.internal</a> &gt; <span class="el_source">LoggingInterceptor.java</span></div><h1>LoggingInterceptor.java</h1><pre class="source lang-java linenums">package net.trajano.app.internal;
+
+import java.util.logging.Logger;
+
+import javax.enterprise.context.ApplicationScoped;
+import javax.interceptor.AroundInvoke;
+import javax.interceptor.Interceptor;
+import javax.interceptor.InvocationContext;
+
+import net.trajano.app.BusinessMethod;
+
+/**
+ * @author Archimedes
+ */
+@BusinessMethod
+@Interceptor
+@ApplicationScoped
+<span class="nc" id="L18">public class LoggingInterceptor {</span>
+    /**
+     * Logger.
+     */
+<span class="nc" id="L22">    private static final Logger LOG = Logger.getLogger(&quot;net.trajano.app&quot;);</span>
+
+    /**
+     * Logs an invocation event.
+     * 
+     * @param ctx
+     *            context
+     * @return return value
+     * @throws Throwable
+     */
+    @AroundInvoke
+    public Object logInvocation(final InvocationContext ctx) throws Throwable {
+<span class="nc" id="L34">        LOG.warning(&quot;around invoke &quot; + ctx.getMethod());</span>
+        try {
+<span class="nc" id="L36">            return ctx.proceed();</span>
+<span class="nc" id="L37">        } catch (final Throwable e) {</span>
+<span class="nc" id="L38">            LOG.severe(&quot;Error calling ctx.proceed in &quot; + ctx.getMethod());</span>
+<span class="nc" id="L39">            throw e;</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>
