@@ -28,15 +28,24 @@
         <site>
             <id>gh-pages</id>
             <name>Trajano Maven Site Deployment</name>
-            <url>github:http://site.trajano.net/app</url>
+            <url>github:http://site.trajano.net/app/</url>
         </site>
     </distributionManagement>
     <properties>
+        <cargo.version>1.4.8</cargo.version>
+        <jdk.version>1.7</jdk.version>
         <project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>utf-8</project.reporting.outputEncoding>
+        <selenium.version>2.42.2</selenium.version>
+        <surefire.version>2.17</surefire.version>
     </properties>
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.11</version>
+            </dependency>
             <dependency>
                 <groupId>net.trajano.app</groupId>
                 <artifactId>app-ear</artifactId>
@@ -47,6 +56,26 @@
                 <groupId>net.trajano.app</groupId>
                 <artifactId>app-ws</artifactId>
                 <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.seleniumhq.selenium</groupId>
+                <artifactId>selenium-firefox-driver</artifactId>
+                <version>${selenium.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.seleniumhq.selenium</groupId>
+                <artifactId>selenium-support</artifactId>
+                <version>${selenium.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.webjars</groupId>
+                <artifactId>angularjs</artifactId>
+                <version>1.2.18</version>
+            </dependency>
+            <dependency>
+                <groupId>org.webjars</groupId>
+                <artifactId>bootstrap</artifactId>
+                <version>3.1.1-2</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -69,9 +98,8 @@
             <plugins>
                 <plugin>
                     <artifactId>maven-checkstyle-plugin</artifactId>
-                    <version>2.12</version>
+                    <version>2.12.1</version>
                     <configuration>
-                        <linkXRef>true</linkXRef>
                         <configLocation>config/checkstyle-configuration.xml</configLocation>
                     </configuration>
                 </plugin>
@@ -79,20 +107,32 @@
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>3.1</version>
                     <configuration>
-                        <source>1.7</source>
-                        <target>1.7</target>
+                        <source>${jdk.version}</source>
+                        <target>${jdk.version}</target>
                     </configuration>
                 </plugin>
                 <plugin>
                     <artifactId>maven-ear-plugin</artifactId>
-                    <version>2.9</version>
+                    <version>2.9.1</version>
                     <configuration>
                         <version>7</version>
                     </configuration>
                 </plugin>
                 <plugin>
+                    <artifactId>maven-ejb-plugin</artifactId>
+                    <version>2.3</version>
+                    <configuration>
+                        <ejbVersion>3.2</ejbVersion>
+                        <archive>
+                            <manifest>
+                                <addClasspath>true</addClasspath>
+                            </manifest>
+                        </archive>
+                    </configuration>
+                </plugin>
+                <plugin>
                     <artifactId>maven-failsafe-plugin</artifactId>
-                    <version>2.17</version>
+                    <version>${surefire.version}</version>
                     <executions>
                         <execution>
                             <id>integration-test</id>
@@ -153,9 +193,6 @@
                 <plugin>
                     <artifactId>maven-jxr-plugin</artifactId>
                     <version>2.4</version>
-                    <configuration>
-                        <linkJavadoc>true</linkJavadoc>
-                    </configuration>
                 </plugin>
                 <plugin>
                     <artifactId>maven-pmd-plugin</artifactId>
@@ -176,10 +213,6 @@
                 <plugin>
                     <artifactId>maven-project-info-reports-plugin</artifactId>
                     <version>2.7</version>
-                    <configuration>
-                        <dependencyDetailsEnabled>false</dependencyDetailsEnabled>
-                        <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
-                    </configuration>
                 </plugin>
                 <plugin>
                     <artifactId>maven-resources-plugin</artifactId>
@@ -201,11 +234,11 @@
                 </plugin>
                 <plugin>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>2.17</version>
+                    <version>${surefire.version}</version>
                 </plugin>
                 <plugin>
                     <artifactId>maven-surefire-report-plugin</artifactId>
-                    <version>2.17</version>
+                    <version>${surefire.version}</version>
                 </plugin>
                 <plugin>
                     <artifactId>maven-war-plugin</artifactId>
@@ -217,9 +250,14 @@
                     <version>2.4.0</version>
                 </plugin>
                 <plugin>
+                    <groupId>org.codehaus.cargo</groupId>
+                    <artifactId>cargo-maven2-plugin</artifactId>
+                    <version>${cargo.version}</version>
+                </plugin>
+                <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>findbugs-maven-plugin</artifactId>
-                    <version>2.5.3</version>
+                    <version>2.5.4</version>
                     <configuration>
                         <excludeFilterFile>config/findbugs-exclude-filter.xml</excludeFilterFile>
                     </configuration>
@@ -227,7 +265,14 @@
                 <plugin>
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
-                    <version>0.7.0.201403182114</version>
+                    <version>0.7.1.201405082137</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>prepare-agent</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -243,18 +288,55 @@
         <plugins>
             <plugin>
                 <artifactId>maven-checkstyle-plugin</artifactId>
+                <configuration>
+                    <linkXRef>true</linkXRef>
+                    <configLocation>config/checkstyle-configuration.xml</configLocation>
+                </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-javadoc-plugin</artifactId>
+                <configuration>
+                    <detectJavaApiLink>true</detectJavaApiLink>
+                    <detectLinks>false</detectLinks>
+                    <detectOfflineLinks>false</detectOfflineLinks>
+                    <quiet>true</quiet>
+                    <useStandardDocletOptions>true</useStandardDocletOptions>
+                    <show>private</show>
+                    <doclet>org.umlgraph.doclet.UmlGraphDoc</doclet>
+                    <docletArtifact>
+                        <groupId>org.umlgraph</groupId>
+                        <artifactId>umlgraph</artifactId>
+                        <version>5.6.6</version>
+                    </docletArtifact>
+                </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-jxr-plugin</artifactId>
+                <configuration>
+                    <linkJavadoc>true</linkJavadoc>
+                </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-pmd-plugin</artifactId>
+                <configuration>
+                    <linkXref>true</linkXref>
+                    <sourceEncoding>utf-8</sourceEncoding>
+                    <minimumTokens>100</minimumTokens>
+                    <targetJdk>1.7</targetJdk>
+                    <rulesets>
+                        <ruleset>/config/pmd-rules.xml</ruleset>
+                    </rulesets>
+                    <includes>
+                        <include>**/src/main/**/*.java</include>
+                    </includes>
+                </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
+                <configuration>
+                    <dependencyDetailsEnabled>false</dependencyDetailsEnabled>
+                    <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
+                </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-surefire-report-plugin</artifactId>
@@ -270,6 +352,51 @@
         </plugins>
     </reporting>
     <profiles>
+        <profile>
+            <id>jdk8</id>
+            <activation>
+                <jdk>1.8</jdk>
+            </activation>
+            <build>
+                <pluginManagement>
+                    <plugins/>
+                </pluginManagement>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <configuration>
+                            <additionalparam>-Xdoclint:none</additionalparam>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>findbugs-maven-plugin</artifactId>
+                        <inherited>false</inherited>
+                        <configuration>
+                            <skip>true</skip>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+            <reporting>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <configuration>
+                            <additionalparam>-Xdoclint:none</additionalparam>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>findbugs-maven-plugin</artifactId>
+                        <inherited>false</inherited>
+                        <configuration>
+                            <skip>true</skip>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </reporting>
+        </profile>
         <profile>
             <id>m2e</id>
             <activation>
@@ -315,19 +442,6 @@
                                 <configuration>
                                     <codeStyleBaseUrl>codestyle</codeStyleBaseUrl>
                                 </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>findbugs-maven-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>findbugs</id>
-                                <phase>compile</phase>
-                                <goals>
-                                    <goal>findbugs</goal>
-                                </goals>
                             </execution>
                         </executions>
                     </plugin>

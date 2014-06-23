@@ -14,7 +14,7 @@
             <plugin>
                 <groupId>net.trajano.mojo</groupId>
                 <artifactId>jaxws-maven-plugin</artifactId>
-                <version>2.3.2-SNAPSHOT</version>
+                <version>2.3.3-SNAPSHOT</version>
                 <executions>
                     <execution>
                         <id>wsimport</id>
@@ -29,6 +29,10 @@
                         <wsdlUrl>http://www.w3schools.com/webservices/tempconvert.asmx?wsdl</wsdlUrl>
                     </wsdlUrls>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
             </plugin>
         </plugins>
     </build>

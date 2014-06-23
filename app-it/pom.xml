@@ -14,20 +14,14 @@
         <developerConnection>scm:git:ssh://git@github.com/trajano/${project.artifactId}.git</developerConnection>
         <tag>HEAD</tag>
     </scm>
-    <properties>
-        <cargo.version>1.4.8</cargo.version>
-        <selenium.version>2.41.0</selenium.version>
-    </properties>
     <dependencies>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-firefox-driver</artifactId>
-            <version>${selenium.version}</version>
         </dependency>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-support</artifactId>
-            <version>${selenium.version}</version>
         </dependency>
         <dependency>
             <groupId>net.trajano.app</groupId>
@@ -59,9 +53,12 @@
                 <extensions>true</extensions>
             </plugin>
             <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
                 <groupId>org.codehaus.cargo</groupId>
                 <artifactId>cargo-maven2-plugin</artifactId>
-                <version>${cargo.version}</version>
                 <executions>
                     <execution>
                         <id>start-container</id>
