@@ -29,6 +29,11 @@
             <type>ear</type>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -86,13 +91,13 @@
                     <configuration>
                         <properties>
                             <cargo.datasource.datasource.derby>
-                              cargo.datasource.driver=org.apache.derby.jdbc.EmbeddedDriver|
-			      cargo.datasource.url=jdbc:derby:derbyDB;create=true|
-                              cargo.datasource.jndi=jdbc/__default|
-			      cargo.datasource.transactionsupport=LOCAL_TRANSACTION|
-			      cargo.datasource.username=APP|
-			      cargo.datasource.password=nonemptypassword
-			    </cargo.datasource.datasource.derby>
+								cargo.datasource.driver=org.apache.derby.jdbc.EmbeddedDriver|
+								cargo.datasource.url=jdbc:derby:derbyDB;create=true|
+								cargo.datasource.jndi=jdbc/__default|
+								cargo.datasource.transactionsupport=LOCAL_TRANSACTION|
+								cargo.datasource.username=APP|
+								cargo.datasource.password=nonemptypassword
+							</cargo.datasource.datasource.derby>
                             <cargo.glassfish.admin.port>14848</cargo.glassfish.admin.port>
                             <cargo.glassfish.deploy.arg.1>--precompilejsp=true</cargo.glassfish.deploy.arg.1>
                             <cargo.glassfish.deploy.arg.2>--createtables=true</cargo.glassfish.deploy.arg.2>

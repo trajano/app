@@ -9,6 +9,13 @@
     <artifactId>app-ws</artifactId>
     <name>Web service client</name>
     <description>This is a web service client example that calls an external web service.</description>
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
     <build>
         <plugins>
             <plugin>

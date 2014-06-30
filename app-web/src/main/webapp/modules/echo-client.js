@@ -20,9 +20,9 @@
 
 				var webSocket = new WebSocket(wsUri);
 				$window.onbeforeunload = function() {
-					websocket.onclose = function() {
+					webSocket.onclose = function() {
 					}; // disable onclose handler first
-					websocket.close();
+					webSocket.close();
 				};
 				return webSocket;
 			})

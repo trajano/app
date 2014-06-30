@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Date;
 
 import javax.annotation.Resource;
+import javax.ejb.EJB;
 import javax.mail.Session;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -34,6 +35,9 @@ public class HelloServlet extends HttpServlet {
     @WebServiceRef(TempConvert.class)
     private TempConvertSoap tempConvert;
 
+    @EJB
+    private WebSocketSessions webSocketSessions;
+
     /**
      * {@inheritDoc}
      */
@@ -50,5 +54,9 @@ public class HelloServlet extends HttpServlet {
         resp.getWriter().print(
                 String.format("<div id='mail'>mailSession is %s</div>",
                         mailSession));
+        resp.getWriter().print(
+                String.format(
+                        "<div id='websocket'>webSocketSessions is %s</div>",
+                        webSocketSessions));
     }
 }
