@@ -1,8 +1,8 @@
 <map id="G" name="G">
-<area shape="rect" id="node1_0" href="./ResourceTest.html" title="net.trajano.app.test.ResourceTest" alt="" coords="16,17,116,42"/>
-<area shape="rect" id="node1" href="./ResourceTest.html" title="&lt;TABLE&gt;" alt="" coords="5,5,127,53"/>
-<area shape="rect" id="node2_1" href="./PersistedBeansTest.html" title="net.trajano.app.test.PersistedBeansTest" alt="" coords="162,17,298,42"/>
-<area shape="rect" id="node2" href="./PersistedBeansTest.html" title="&lt;TABLE&gt;" alt="" coords="151,5,309,53"/>
-<area shape="rect" id="node3_2" href="./ModuleTest.html" title="net.trajano.app.test.ModuleTest" alt="" coords="344,17,431,42"/>
-<area shape="rect" id="node3" href="./ModuleTest.html" title="&lt;TABLE&gt;" alt="" coords="333,5,441,53"/>
+<area shape="rect" id="node1_0" href="./PersistedBeansTest.html" title="net.trajano.app.test.PersistedBeansTest" alt="" coords="15,16,153,43"/>
+<area shape="rect" id="node1" href="./PersistedBeansTest.html" title="&lt;TABLE&gt;" alt="" coords="4,5,164,53"/>
+<area shape="rect" id="node2_1" href="./ModuleTest.html" title="net.trajano.app.test.ModuleTest" alt="" coords="199,16,289,43"/>
+<area shape="rect" id="node2" href="./ModuleTest.html" title="&lt;TABLE&gt;" alt="" coords="189,5,299,53"/>
+<area shape="rect" id="node3_2" href="./ResourceTest.html" title="net.trajano.app.test.ResourceTest" alt="" coords="334,16,437,43"/>
+<area shape="rect" id="node3" href="./ResourceTest.html" title="&lt;TABLE&gt;" alt="" coords="323,5,447,53"/>
 </map>
