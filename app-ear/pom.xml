@@ -30,6 +30,16 @@
                             <contextRoot>/app</contextRoot>
                         </webModule>
                     </modules>
+                    <security>
+                        <security-role>
+                            <role-name>users</role-name>
+                            <description>Users</description>
+                        </security-role>
+                        <security-role>
+                            <role-name>service</role-name>
+                            <description>Service role, generally has access to execute web services.</description>
+                        </security-role>
+                    </security>
                 </configuration>
             </plugin>
             <plugin>

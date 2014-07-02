@@ -9,10 +9,6 @@
 			<max-age>0</max-age>
 		</cookie-config>
 	</session-config>
-	<security-role>
-		<description>Users</description>
-		<role-name>users</role-name>
-	</security-role>
 	<security-constraint>
 		<web-resource-collection>
 			<web-resource-name>rest</web-resource-name>
