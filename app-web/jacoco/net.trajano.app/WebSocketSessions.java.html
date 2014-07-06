@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>WebSocketSessions.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Web App</a> &gt; <a href="index.source.html" class="el_package">net.trajano.app</a> &gt; <span class="el_source">WebSocketSessions.java</span></div><h1>WebSocketSessions.java</h1><pre class="source lang-java linenums">package net.trajano.app;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.ejb.Singleton;
+import javax.websocket.Session;
+
+/**
+ * Manages web socket sessions. This is a singleton as it is storing
+ * non-serializable data namely {@link Session}.
+ *
+ * @author Archimedes Trajano
+ *
+ */
+@Singleton
+<span class="nc" id="L18">public class WebSocketSessions {</span>
+    /**
+     * Map of sessions.
+     */
+<span class="nc" id="L22">    private final Map&lt;String, Session&gt; map = new HashMap&lt;&gt;();</span>
+
+    /**
+     * Gets a collection of all sessions.
+     *
+     * @return all sessions
+     */
+    public Collection&lt;Session&gt; getAllSessions() {
+<span class="nc" id="L30">        return map.values();</span>
+    }
+
+    /**
+     * Puts a session in the collection.
+     *
+     * @param session
+     *            session
+     */
+    public void put(final Session session) {
+<span class="nc" id="L40">        map.put(session.getId(), session);</span>
+<span class="nc" id="L41">    }</span>
+
+    /**
+     * Remove session from the collection.
+     *
+     * @param session
+     *            session
+     */
+    public void remove(final Session session) {
+<span class="nc" id="L50">        map.remove(session.getId());</span>
+<span class="nc" id="L51">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

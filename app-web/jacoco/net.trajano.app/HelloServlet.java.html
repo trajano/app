@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Date;
 
 import javax.annotation.Resource;
+import javax.ejb.EJB;
 import javax.mail.Session;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,7 +21,7 @@ import com.w3schools.webservices.TempConvertSoap;
  */
 @WebServlet(&quot;/hello&quot;)
 @SuppressWarnings(&quot;serial&quot;)
-<span class="nc" id="L23">public class HelloServlet extends HttpServlet {</span>
+<span class="nc" id="L24">public class HelloServlet extends HttpServlet {</span>
 
     /**
      * Mail session resource.
@@ -34,6 +35,9 @@ import com.w3schools.webservices.TempConvertSoap;
     @WebServiceRef(TempConvert.class)
     private TempConvertSoap tempConvert;
 
+    @EJB
+    private WebSocketSessions webSocketSessions;
+
     /**
      * {@inheritDoc}
      */
@@ -41,15 +45,19 @@ import com.w3schools.webservices.TempConvertSoap;
     protected void doGet(final HttpServletRequest req,
             final HttpServletResponse resp) throws ServletException,
             IOException {
-<span class="nc" id="L44">        resp.getWriter().print(</span>
+<span class="nc" id="L48">        resp.getWriter().print(</span>
                 String.format(&quot;&lt;div id='text'&gt;Hello servlet on %s&lt;/div&gt;&quot;,
                         new Date()));
-<span class="nc" id="L47">        resp.getWriter().print(</span>
+<span class="nc" id="L51">        resp.getWriter().print(</span>
                 String.format(&quot;&lt;div id='temp'&gt;312F is %sC&lt;/div&gt;&quot;,
                         tempConvert.fahrenheitToCelsius(&quot;312&quot;)));
-<span class="nc" id="L50">        resp.getWriter().print(</span>
+<span class="nc" id="L54">        resp.getWriter().print(</span>
                 String.format(&quot;&lt;div id='mail'&gt;mailSession is %s&lt;/div&gt;&quot;,
                         mailSession));
-<span class="nc" id="L53">    }</span>
+<span class="nc" id="L57">        resp.getWriter().print(</span>
+                String.format(
+                        &quot;&lt;div id='websocket'&gt;webSocketSessions is %s&lt;/div&gt;&quot;,
+                        webSocketSessions));
+<span class="nc" id="L61">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

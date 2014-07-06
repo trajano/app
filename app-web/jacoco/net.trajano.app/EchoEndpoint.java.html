@@ -1,21 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>EchoEndpoint.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Web App</a> &gt; <a href="index.source.html" class="el_package">net.trajano.app</a> &gt; <span class="el_source">EchoEndpoint.java</span></div><h1>EchoEndpoint.java</h1><pre class="source lang-java linenums">package net.trajano.app;
 
 import java.io.IOException;
+import java.util.ResourceBundle;
 
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
+import javax.websocket.EndpointConfig;
+import javax.websocket.OnClose;
 import javax.websocket.OnMessage;
+import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
 /**
  * Web socket endpoint.
- * 
- * @author Archimedes
+ *
+ * @author Archimedes Trajano
  */
 @ServerEndpoint(&quot;/echo&quot;)
-<span class="nc" id="L15">public class EchoEndpoint {</span>
+@Stateless
+<span class="nc" id="L22">public class EchoEndpoint {</span>
+    /**
+     * Resource bundle.
+     */
+<span class="nc" id="L26">    private static final ResourceBundle R = ResourceBundle</span>
+            .getBundle(&quot;net/trajano/app/internal/Messages&quot;);
+
+    @EJB
+    private WebSocketSessions sessions;
+
+    @OnClose
+    public void onClose(final Session session) {
+<span class="nc" id="L34">        sessions.remove(session);</span>
+<span class="nc" id="L35">    }</span>
+
     /**
      * Sends back the original message.
-     * 
+     *
      * @param session
      *            web socket session
      * @param message
@@ -25,7 +46,25 @@ import javax.websocket.server.ServerEndpoint;
     @OnMessage
     public void onMessage(final Session session, final String message)
             throws IOException {
-<span class="nc" id="L28">        session.getBasicRemote().sendText(message);</span>
-<span class="nc" id="L29">    }</span>
+<span class="nc" id="L49">        System.out.println(sessions);</span>
+<span class="nc" id="L50">        session.getBasicRemote()</span>
+        .sendText(message + &quot; hello &quot; + session.getId());
+<span class="nc" id="L52">        System.out.println(&quot;about to send to &quot; + sessions.getAllSessions());</span>
+<span class="nc bnc" id="L53" title="All 2 branches missed.">        for (final Session remoteSession : sessions.getAllSessions()) {</span>
+<span class="nc bnc" id="L54" title="All 2 branches missed.">            if (remoteSession.isOpen()) {</span>
+<span class="nc" id="L55">                remoteSession.getBasicRemote().sendText(</span>
+                        String.format(R.getString(&quot;sample&quot;), message,
+                                session.getId()));
+            }
+<span class="nc" id="L59">        }</span>
+
+<span class="nc" id="L61">    }</span>
+
+    @OnOpen
+    public void onOpen(final Session session, final EndpointConfig config) {
+<span class="nc" id="L65">        System.out.println(&quot;ON OPEN &quot; + sessions);</span>
+<span class="nc" id="L66">        System.out.println(config.getUserProperties());</span>
+<span class="nc" id="L67">        sessions.put(session);</span>
+<span class="nc" id="L68">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

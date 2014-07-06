@@ -1,8 +1,8 @@
 <map id="G" name="G">
-<area shape="rect" id="node1_0" href="./ObjectFactory.html" title="net.trajano.app.internal.ObjectFactory" alt="" coords="16,17,117,42"/>
-<area shape="rect" id="node1" href="./ObjectFactory.html" title="&lt;TABLE&gt;" alt="" coords="5,5,128,53"/>
-<area shape="rect" id="node2_1" href="./LoggingInterceptor.html" title="net.trajano.app.internal.LoggingInterceptor" alt="" coords="163,17,288,42"/>
-<area shape="rect" id="node2" href="./LoggingInterceptor.html" title="&lt;TABLE&gt;" alt="" coords="152,5,299,53"/>
-<area shape="rect" id="node3_2" href="./AppApplication.html" title="net.trajano.app.internal.AppApplication" alt="" coords="333,17,440,42"/>
-<area shape="rect" id="node3" href="./AppApplication.html" title="&lt;TABLE&gt;" alt="" coords="323,5,451,53"/>
+<area shape="rect" id="node1_0" href="./LoggingInterceptor.html" title="net.trajano.app.internal.LoggingInterceptor" alt="" coords="15,16,143,43"/>
+<area shape="rect" id="node1" href="./LoggingInterceptor.html" title="&lt;TABLE&gt;" alt="" coords="4,5,153,53"/>
+<area shape="rect" id="node2_1" href="./ObjectFactory.html" title="net.trajano.app.internal.ObjectFactory" alt="" coords="187,16,290,43"/>
+<area shape="rect" id="node2" href="./ObjectFactory.html" title="&lt;TABLE&gt;" alt="" coords="177,5,301,53"/>
+<area shape="rect" id="node3_2" href="./AppApplication.html" title="net.trajano.app.internal.AppApplication" alt="" coords="335,16,443,43"/>
+<area shape="rect" id="node3" href="./AppApplication.html" title="&lt;TABLE&gt;" alt="" coords="325,5,454,53"/>
 </map>
