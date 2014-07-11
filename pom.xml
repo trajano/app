@@ -14,6 +14,7 @@
     <description>Java EE Application</description>
     <url>http://site.trajano.net/app</url>
     <modules>
+    <module>app-db</module>
         <module>app-ear</module>
         <module>app-it</module>
         <module>app-web</module>
