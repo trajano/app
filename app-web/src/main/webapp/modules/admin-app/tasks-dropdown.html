@@ -1,0 +1,23 @@
+<ul class="dropdown-menu dropdown-tasks" tabindex="-1" role="menu">
+	<li data-ng-repeat-start="item in content"><a role="menuitem"
+		tabindex="-1" data-ng-href="{{item.href}}" href="javascript:void(0)">
+			<div>
+				<p>
+					<strong>{{item.subject}}</strong> <span
+						class="pull-right text-muted">{{item.progress}}% Complete</span>
+				</p>
+				<div class="progress progress-striped">
+					<div class="progress-bar progress-bar-success" role="progressbar"
+						aria-valuenow="{{item.progress}}" aria-valuemin="0"
+						aria-valuemax="100"
+						data-ng-style="{ width: ( item.progress + '%') }">
+						<span class="sr-only">{{item.progress}}% Complete</span>
+					</div>
+				</div>
+			</div>
+	</a></li>
+	<li data-ng-repeat-end class="divider"></li>
+	<li><a class="text-center" role="menuitem" tabindex="-1" href="#">
+			<strong>All tasks</strong> <i class="fa fa-angle-right"></i>
+	</a></li>
+</ul>

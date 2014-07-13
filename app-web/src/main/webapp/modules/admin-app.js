@@ -22,12 +22,77 @@
 									function($scope, $attrs) {
 
 										var applicationConfiguration = {
-											'title' : 'Trajano Enterprise Framework'
+											'title' : 'Trajano Enterprise Framework',
+											'profileUri' : "#",
+											'logoutUri' : "#"
 										};
 
 										$scope.applicationConfiguration = applicationConfiguration;
 										$scope.title = applicationConfiguration.title;
-										// $scope.notification.messages
+
+										// TODO This will be loaded by web
+										// sockets, the data set should be
+										// relatively small.
+
+										// alerts and user configuration are
+										// using the default layout
+
+										// alerts is using the default layout to
+										// allow flexibility in the messages
+										// being sent
+
+										$scope.notifications = {
+											messageCount : 15,
+											messages : [
+													{
+														'from' : 'John Smith',
+														'when' : 'Yesterday',
+														'href' : '#',
+														'excerpt' : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...'
+													},
+													{
+														'from' : 'John Smith2',
+														'when' : 'Yesterday',
+														'href' : '#',
+														'excerpt' : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...'
+													} ],
+											taskCount : 12,
+											tasks : [ {
+												subject : "First task",
+												progress : 42
+											}, {
+												subject : "Second task",
+												progress : 12
+											}, {
+												subject : "Three task",
+												progress : 99
+											} ],
+											alertCount : 16,
+											alerts : [ {
+												icon : "comment",
+												message : "New comment",
+												when : "4 minutes ago"
+											}, {
+												icon : "twitter",
+												message : "3 new followers",
+												when : "12 minutes ago"
+											}, {
+												icon : "envelope",
+												message : "Message sent",
+												when : "4 minutes ago"
+											}, {
+												icon : "tasks",
+												message : "New task",
+												when : "4 minutes ago"
+											},
+
+											]
+										};
+										
+										$scope.userInfo = {
+											"name" : "Archimedes Trajano",
+											"email" : "archimedes@trajano.net"
+										};
 										$scope.messages = [
 
 												{

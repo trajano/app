@@ -1,15 +1,14 @@
-<ul class="dropdown-menu dropdown-messages" tabindex="-1" role="menu">
+<ul class="dropdown-menu dropdown-alerts" tabindex="-1" role="menu">
 	<li data-ng-repeat-start="item in content"><a role="menuitem"
 		tabindex="-1" data-ng-href="{{item.href}}" href="javascript:void(0)">
 			<div>
-				<strong>{{item.from}}</strong> <span class="pull-right text-muted">
-					<em>{{item.when}}</em>
-				</span>
+				<i
+					data-ng-class="'fa fa-fw fa-' + item.icon"> </i> {{item.message}}
+				<span class="pull-right text-muted small">{{item.when}} </span>
 			</div>
-			<div>{{item.excerpt}}</div>
 	</a></li>
 	<li data-ng-repeat-end class="divider"></li>
 	<li><a class="text-center" role="menuitem" tabindex="-1" href="#">
-			<strong>Read all messages</strong> <i class="fa fa-angle-right"></i>
+			<strong>View all alerts</strong> <i class="fa fa-angle-right"></i>
 	</a></li>
 </ul>

@@ -1,0 +1,8 @@
+<ul class="dropdown-menu dropdown-user" tabindex="-1" role="menu">
+	<li data-ng-if="content.profileUri"><a
+		data-ng-href="{{content.profileUri}}" href="#"><i
+			class="fa fa-user fa-fw"> </i> User Profile</a></li>
+	<li><a href="#"><i class="fa fa-gear fa-fw"> </i> Settings</a></li>
+	<li data-ng-if="content.logoutUri"><a href="{{content.logoutUri}}"><i class="fa fa-sign-out fa-fw"></i>
+			Logout</a></li>
+</ul>
