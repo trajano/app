@@ -1,0 +1,15 @@
+<ul class="dropdown-menu dropdown-messages" tabindex="-1" role="menu">
+
+	<li data-ng-repeat="item in content"><a role="menuitem"
+		tabindex="-1" data-ng-href="{{item.href}}" href="javascript:void(0)">
+			<div>
+				<strong>{{item.from}}</strong> <span class="pull-right text-muted">
+					<em>{{item.when}}</em>
+				</span>
+			</div>
+			<div>{{item.excerpt}}</div>
+			<div data-ng-if="!$last" class="divider"></div>
+	</a></li>
+
+
+</ul>
