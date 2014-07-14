@@ -18,9 +18,31 @@
 							controller : [
 									'$scope',
 									'$attrs',
+									'$window',
 
-									function($scope, $attrs) {
+									function($scope, $attrs, $window) {
 
+										$scope.onResize = function() {
+											var width = ($window.innerWidth > 0) ? $window.innerWidth
+													: this.screen.width;
+											console.info(width);
+											if (width < 768) {
+												angular.element(
+														'div.sidebar-collapse')
+														.addClass('collapse')
+											} else {
+												angular
+														.element(
+																'div.sidebar-collapse')
+														.removeClass('collapse')
+											}
+										};
+
+										angular.element($window).bind('resize',
+												function() {
+													$scope.onResize();
+													$scope.$apply();
+												});
 										var applicationConfiguration = {
 											'title' : 'Trajano Enterprise Framework',
 											'profileUri' : "#",
@@ -88,7 +110,7 @@
 
 											]
 										};
-										
+
 										$scope.userInfo = {
 											"name" : "Archimedes Trajano",
 											"email" : "archimedes@trajano.net"
