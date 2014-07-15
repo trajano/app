@@ -38,4 +38,17 @@
 		<filter-name>WebResourceOptimizer</filter-name>
 		<url-pattern>/wro/*</url-pattern>
 	</filter-mapping>
+	<servlet>
+		<servlet-name>TplProvider</servlet-name>
+		<servlet-class>net.trajano.app.TplServlet</servlet-class>
+		<init-param>
+			<param-name>admin-app</param-name>
+			<param-value>/modules/admin-app</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TplProvider</servlet-name>
+		<url-pattern>/adminapp.tpl.js</url-pattern>
+	</servlet-mapping>
 </web-app>
