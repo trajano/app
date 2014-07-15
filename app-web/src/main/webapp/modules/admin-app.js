@@ -5,7 +5,7 @@
 	// thing.
 
 	angular
-			.module('admin-app', [ 'mgcrea.ngStrap', 'ngSanitize' ])
+			.module('admin-app', [ 'mgcrea.ngStrap', 'ngSanitize', 'ngAnimate' ])
 
 			.directive(
 					"adminApp",
