@@ -5,7 +5,8 @@
 	// thing.
 
 	angular
-			.module('admin-app', [ 'mgcrea.ngStrap', 'ngSanitize', 'ngAnimate' ])
+			.module('admin-app',
+					[ 'mgcrea.ngStrap', 'ngSanitize', 'ngAnimate' ])
 
 			.directive(
 					"adminApp",
@@ -25,7 +26,6 @@
 										$scope.onResize = function() {
 											var width = ($window.innerWidth > 0) ? $window.innerWidth
 													: this.screen.width;
-											console.info(width);
 											if (width < 768) {
 												angular.element(
 														'div.sidebar-collapse')
@@ -43,7 +43,12 @@
 													$scope.onResize();
 													$scope.$apply();
 												});
-										angular.element('#side-menu').metisMenu();
+										angular.element('#side-menu')
+												.metisMenu();
+
+										// TODO this would be loaded by via REST
+										// since the results should be readily
+										// cachable.
 										var applicationConfiguration = {
 											'title' : 'Trajano Enterprise Framework',
 											'profileUri' : "#",
@@ -52,6 +57,7 @@
 
 										$scope.applicationConfiguration = applicationConfiguration;
 										$scope.title = applicationConfiguration.title;
+										$window.document.title = applicationConfiguration.title;
 
 										// TODO This will be loaded by web
 										// sockets, the data set should be
