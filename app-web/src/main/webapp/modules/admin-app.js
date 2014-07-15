@@ -6,7 +6,20 @@
 
 	angular
 			.module('admin-app',
-					[ 'mgcrea.ngStrap', 'ngSanitize', 'ngAnimate' ])
+					[ 'mgcrea.ngStrap', 'ngSanitize', 'ngAnimate', 'ngRoute' ])
+
+			.config([ '$routeProvider',
+
+			function($routeProvider) {
+				// TODO find a way of making this read from somewhere else?
+				$routeProvider.when('/home', {
+					templateUrl : 'content.html'
+				}).when('/second', {
+					templateUrl : 'secondcontent.html'
+				}).otherwise({
+					redirectTo : '/home'
+				});
+			} ])
 
 			.directive(
 					"adminApp",

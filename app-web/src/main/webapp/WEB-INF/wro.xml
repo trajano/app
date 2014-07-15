@@ -9,6 +9,7 @@
 		<js>/webjars/angularjs/1.2.19/angular.js</js>
 		<js>/webjars/angularjs/1.2.19/angular-animate.js</js>
 		<js>/webjars/angularjs/1.2.19/angular-resource.js</js>
+		<js>/webjars/angularjs/1.2.19/angular-route.js</js>
 		<js>/webjars/angularjs/1.2.19/angular-sanitize.js</js>
 		<js>/webjars/angular-strap/2.0.3/angular-strap.js</js>
 		<js>/webjars/angular-strap/2.0.3/angular-strap.tpl.js</js>
