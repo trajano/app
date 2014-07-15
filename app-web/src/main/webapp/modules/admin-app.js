@@ -14,11 +14,25 @@
 				// TODO find a way of making this read from somewhere else?
 				$routeProvider.when('/home', {
 					templateUrl : 'content.html'
-				}).when('/second', {
-					templateUrl : 'secondcontent.html'
+				}).when('/:page', {
+					templateUrl : function(parameters) {
+						return parameters.page + '.html';
+					}
 				}).otherwise({
 					redirectTo : '/home'
 				});
+			} ])
+
+			.directive("head", [ '$rootScope', '$compile',
+
+			function($rootScope, $compile) {
+				return {
+					restrict : 'E',
+					scope : false,
+					compile : function() {
+						console.warning("here!");
+					}
+				}
 			} ])
 
 			.directive(

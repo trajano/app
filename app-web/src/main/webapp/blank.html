@@ -21,11 +21,14 @@
 	locale specific?
 	/ redirects to default local /en/ ....
 	web.xml has supported locales, the first one being the default.
-	// data is parsed so data-i18n-attribute if blank it uses the original attribute value as the key
+	// data is parsed so data-i18n-attribute if it uses the original attribute value as the key
 	// data is parsed so data-i18n if blank it uses the inner HTML value as the key
+	// if the root element has data-i18n-default="true" then all elements will be i18n by default, overrides are required for text that would contain other elements.  A special value "skip" is used to skip i18n for the element when the default is true.   
 	// this way place holders can still work in different positions.
 	
 	How do we do the menus?
+	
+	Custom controls can be added as additional javascript files. 
 	 -->
 </body>
 
