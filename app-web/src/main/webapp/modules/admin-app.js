@@ -43,6 +43,7 @@
 													$scope.onResize();
 													$scope.$apply();
 												});
+										angular.element('#side-menu').metisMenu();
 										var applicationConfiguration = {
 											'title' : 'Trajano Enterprise Framework',
 											'profileUri' : "#",
