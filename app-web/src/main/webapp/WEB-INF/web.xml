@@ -30,4 +30,12 @@
 			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
 		</user-data-constraint>
 	</security-constraint>
+	<filter>
+		<filter-name>WebResourceOptimizer</filter-name>
+		<filter-class>ro.isdc.wro.http.WroFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>WebResourceOptimizer</filter-name>
+		<url-pattern>/wro/*</url-pattern>
+	</filter-mapping>
 </web-app>
