@@ -35,6 +35,9 @@ public class HelloServlet extends HttpServlet {
     @WebServiceRef(TempConvert.class)
     private TempConvertSoap tempConvert;
 
+    /**
+     * WebSocket sessions.
+     */
     @EJB
     private WebSocketSessions webSocketSessions;
 
