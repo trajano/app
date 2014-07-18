@@ -1,174 +1,219 @@
 (function() {
-	'use strict';
+  'use strict';
 
-	// TODO choose modules that are needed rather than loading up the whole
-	// thing.
+  // TODO choose modules that are needed rather than loading up the whole
+  // thing.
 
-	angular
-			.module('admin-app',
-					[ 'mgcrea.ngStrap', 'ngSanitize', 'ngAnimate', 'ngRoute' ])
+  var m = angular.module('admin-app', ['mgcrea.ngStrap', 'ngRoute']);
 
-			.config([ '$routeProvider',
+  m.config(['$routeProvider', function($routeProvider) {
+    $routeProvider.when('/home', {
+      templateUrl: 'content.html'
+    }).when('/:page/:id', {
+      templateUrl: function($routeParams) {
+        return $routeParams.page + '.html';
+      },
+      controller: ['$scope', '$routeParams', function($scope, $routeParams) {
+        console.warn("retrieval of " + $routeParams.id);
+      }]
+    }).when('/:page', {
+      templateUrl: function($routeParams) {
+        return $routeParams.page + '.html';
+      },
+    }).otherwise({
+      redirectTo: '/home'
+    });
+  }]);
 
-			function($routeProvider) {
-				// TODO find a way of making this read from somewhere else?
-				$routeProvider.when('/home', {
-					templateUrl : 'content.html'
-				}).when('/:page', {
-					templateUrl : function(parameters) {
-						return parameters.page + '.html';
-					}
-				}).otherwise({
-					redirectTo : '/home'
-				});
-			} ])
+  m.directive('tfScrollspyList', [
+      '$location',
+      '$anchorScroll',
+      '$window',
+      function($location, $anchorScroll, $window) {
+        return {
+          compile: function postLink(el, attr) {
+            var children = el[0].querySelectorAll('li > a[href]');
 
-			.directive("head", [ '$rootScope', '$compile',
+            angular.forEach(children, function(child) {
+              var c = angular.element(child);
+              var href = c.attr('href');
+              c.removeAttr('href');
 
-			function($rootScope, $compile) {
-				return {
-					restrict : 'E',
-					scope : false,
-					compile : function() {
-						console.warning("here!");
-					}
-				}
-			} ])
+              var parent = c.parent();
+              parent.attr('bs-scrollspy', '').attr('data-target', href);
 
-			.directive(
-					"adminApp",
-					function() {
-						return {
-							templateUrl : 'modules/admin-app/base.html',
+              c.bind('click',
+                      function(event) {
+                        $location.hash(href.substring(1));
+                        $anchorScroll();
+                        // TODO don't hard code this.
+                        var yourHeight = getComputedStyle(angular
+                                .element(".navbar")[0]).height
+                                .replace("px", "");
+                        var scrolledY = $window.scrollY;
+                        console.log("HERE");
+                        if (scrolledY) {
+                          $window.scroll(0, scrolledY - yourHeight);
+                        }
 
-							// TODO add module to get the application name and
-							// such
-							controller : [
-									'$scope',
-									'$attrs',
-									'$window',
+                      });
+            })
+          }
+        }
+      }]);
 
-									function($scope, $attrs, $window) {
+  m.directive('tfScrollspyList', ['$location', '$anchorScroll',
+      function($location, $anchorScroll) {
+        return {
+          compile: function postLink(el, attr) {
+            var children = el[0].querySelectorAll('li > a[href]');
 
-										$scope.onResize = function() {
-											var width = ($window.innerWidth > 0) ? $window.innerWidth
-													: this.screen.width;
-											if (width < 768) {
-												angular.element(
-														'div.sidebar-collapse')
-														.addClass('collapse')
-											} else {
-												angular
-														.element(
-																'div.sidebar-collapse')
-														.removeClass('collapse')
-											}
-										};
+            angular.forEach(children, function(child) {
+              var c = angular.element(child);
+              console.log(c);
+              var href = c.attr('href');
+              c.removeAttr('href');
 
-										angular.element($window).bind('resize',
-												function() {
-													$scope.onResize();
-													$scope.$apply();
-												});
-										angular.element('#side-menu')
-												.metisMenu();
+              var parent = c.parent();
+              parent.attr('bs-scrollspy', '').attr('data-target', href);
 
-										// TODO this would be loaded by via REST
-										// since the results should be readily
-										// cachable.
-										var applicationConfiguration = {
-											'title' : 'Trajano Enterprise Framework',
-											'profileUri' : "#",
-											'logoutUri' : "#"
-										};
+              c.bind('click', function(event) {
+                $location.hash(href.substring(1));
+                $anchorScroll();
+              });
+            })
+          }
+        }
+      }]);
 
-										$scope.applicationConfiguration = applicationConfiguration;
-										$scope.title = applicationConfiguration.title;
-										$window.document.title = applicationConfiguration.title;
+  m
+          .directive(
+                  "adminApp",
+                  function() {
+                    return {
+                      templateUrl: 'modules/admin-app/base.html',
 
-										// TODO This will be loaded by web
-										// sockets, the data set should be
-										// relatively small.
+                      // TODO add module to get the application name and
+                      // such
+                      controller: [
+                          '$scope',
+                          '$attrs',
+                          '$window',
 
-										// alerts and user configuration are
-										// using the default layout
+                          function($scope, $attrs, $window) {
 
-										// alerts is using the default layout to
-										// allow flexibility in the messages
-										// being sent
+                            $scope.onResize = function() {
+                              var width = ($window.innerWidth > 0)
+                                      ? $window.innerWidth : this.screen.width;
+                              if (width < 768) {
+                                angular.element('div.sidebar-collapse')
+                                        .addClass('collapse')
+                              } else {
+                                angular.element('div.sidebar-collapse')
+                                        .removeClass('collapse')
+                              }
+                            };
 
-										$scope.notifications = {
-											messageCount : 15,
-											messages : [
-													{
-														'from' : 'John Smith',
-														'when' : 'Yesterday',
-														'href' : '#',
-														'excerpt' : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...'
-													},
-													{
-														'from' : 'John Smith2',
-														'when' : 'Yesterday',
-														'href' : '#',
-														'excerpt' : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...'
-													} ],
-											taskCount : 12,
-											tasks : [ {
-												subject : "First task",
-												progress : 42
-											}, {
-												subject : "Second task",
-												progress : 12
-											}, {
-												subject : "Three task",
-												progress : 99
-											} ],
-											alertCount : 16,
-											alerts : [ {
-												icon : "comment",
-												message : "New comment",
-												when : "4 minutes ago"
-											}, {
-												icon : "twitter",
-												message : "3 new followers",
-												when : "12 minutes ago"
-											}, {
-												icon : "envelope",
-												message : "Message sent",
-												when : "4 minutes ago"
-											}, {
-												icon : "tasks",
-												message : "New task",
-												when : "4 minutes ago"
-											},
+                            angular.element($window).bind('resize', function() {
+                              $scope.onResize();
+                              $scope.$apply();
+                            });
+                            angular.element('#side-menu').metisMenu();
 
-											]
-										};
+                            // TODO this would be loaded by via REST
+                            // since the results should be readily
+                            // cachable.
+                            var applicationConfiguration = {
+                              'title': 'Trajano Enterprise Framework',
+                              'profileUri': "#",
+                              'logoutUri': "#"
+                            };
 
-										$scope.userInfo = {
-											"name" : "Archimedes Trajano",
-											"email" : "archimedes@trajano.net"
-										};
-										$scope.messages = [
+                            $scope.applicationConfiguration = applicationConfiguration;
+                            $scope.title = applicationConfiguration.title;
+                            $window.document.title = applicationConfiguration.title;
 
-												{
-													'from' : 'John Smith',
-													'when' : 'Yesterday',
-													'href' : '#',
-													'excerpt' : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...'
-												},
-												{
-													'from' : 'John Smith2',
-													'when' : 'Yesterday',
-													'href' : '#',
-													'excerpt' : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...'
-												}
+                            // TODO This will be loaded by web
+                            // sockets, the data set should be
+                            // relatively small.
 
-										];
-									} ]
-						};
-					})
+                            // alerts and user configuration are
+                            // using the default layout
 
-	;
+                            // alerts is using the default layout to
+                            // allow flexibility in the messages
+                            // being sent
+
+                            $scope.notifications = {
+                              messageCount: 15,
+                              messages: [
+                                  {
+                                    'from': 'John Smith',
+                                    'when': 'Yesterday',
+                                    'href': '#',
+                                    'excerpt': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...'
+                                  },
+                                  {
+                                    'from': 'John Smith2',
+                                    'when': 'Yesterday',
+                                    'href': '#',
+                                    'excerpt': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...'
+                                  }],
+                              taskCount: 12,
+                              tasks: [{
+                                subject: "First task",
+                                progress: 42
+                              }, {
+                                subject: "Second task",
+                                progress: 12
+                              }, {
+                                subject: "Three task",
+                                progress: 99
+                              }],
+                              alertCount: 16,
+                              alerts: [{
+                                icon: "comment",
+                                message: "New comment",
+                                when: "4 minutes ago"
+                              }, {
+                                icon: "twitter",
+                                message: "3 new followers",
+                                when: "12 minutes ago"
+                              }, {
+                                icon: "envelope",
+                                message: "Message sent",
+                                when: "4 minutes ago"
+                              }, {
+                                icon: "tasks",
+                                message: "New task",
+                                when: "4 minutes ago"
+                              },
+
+                              ]
+                            };
+
+                            $scope.userInfo = {
+                              "name": "Archimedes Trajano",
+                              "email": "archimedes@trajano.net"
+                            };
+                            $scope.messages = [
+
+                                {
+                                  'from': 'John Smith',
+                                  'when': 'Yesterday',
+                                  'href': '#',
+                                  'excerpt': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...'
+                                },
+                                {
+                                  'from': 'John Smith2',
+                                  'when': 'Yesterday',
+                                  'href': '#',
+                                  'excerpt': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...'
+                                }
+
+                            ];
+                          }]
+                    };
+                  });
 
 }());
