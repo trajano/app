@@ -309,7 +309,7 @@ table.dataTable thead .sorting:after {
 	margin: 15px 0;
 }
 
-#page-wrapper > h1 {
+#page-wrapper>h1 {
 	border-bottom-color: #EEE;
 	border-bottom-style: solid;
 	border-bottom-width: 1px;
@@ -318,4 +318,20 @@ table.dataTable thead .sorting:after {
 	color: #333;
 	margin-top: 0px;
 	padding-top: 40px;
+}
+
+@media ( min-width :768px) {
+	.affixed {
+		position: fixed;
+		width: 12.5%;
+	}
+}
+
+@media ( max-height :600px) and (max-width:767px) {
+	.affixed {
+		position: fixed;
+	}
+}
+
+@media ( max-height :400px) and (max-width:767px) {
 }

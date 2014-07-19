@@ -32,16 +32,13 @@
       function($location, $anchorScroll, $window) {
         return {
           compile: function postLink(el, attr) {
-            var children = el[0].querySelectorAll('li > a[href]');
-
+            var children = el[0].querySelectorAll('a[href]');
             angular.forEach(children, function(child) {
               var c = angular.element(child);
               var href = c.attr('href');
               c.removeAttr('href');
 
-              var parent = c.parent();
-              parent.attr('bs-scrollspy', '').attr('data-target', href);
-
+              c.attr('bs-scrollspy', '').attr('data-target', href);
               c.bind('click',
                       function(event) {
                         $location.hash(href.substring(1));

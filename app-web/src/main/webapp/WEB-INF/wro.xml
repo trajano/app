@@ -15,8 +15,8 @@
 		<js>/webjars/bootstrap/3.2.0/js/bootstrap.min.js</js>
 	</group>
 	<group name="admin">
+		<group-ref>core</group-ref>
 		<css>/css/sb-admin.css</css>
 		<js>/jquery.metisMenu.js</js>
-		<group-ref>core</group-ref>
 	</group>
 </groups>

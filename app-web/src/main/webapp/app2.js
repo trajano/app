@@ -2,7 +2,7 @@
 (function() {
 	'use strict';
 
-	angular.module('myApp', [ 'ui.router', 'mgcrea.ngStrap' ])
+	angular.module('myApp', [ 'ui.router', 'mgcrea.ngStrap', 'Mac' ])
 
 	.directive(
 			'tfScrollspyList',
