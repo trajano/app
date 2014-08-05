@@ -15,7 +15,9 @@ import javax.xml.bind.annotation.XmlElement;
  * Sample persisted bean.
  */
 @Entity
-@NamedQueries({ @NamedQuery(name = "PersistedBean.getAllReverseOrder", query = "select p from PersistedBean p order by p.someTimestamp desc, p.id desc") })
+@NamedQueries({
+        @NamedQuery(name = "PersistedBean.getAllReverseOrder", query = "select p from PersistedBean p order by p.someTimestamp desc, p.id desc"),
+        @NamedQuery(name = "PersistedBean.getAllByMessage", query = "select p from PersistedBean p where p.message = :message") })
 public class PersistedBean {
     /**
      * ID.
@@ -50,7 +52,7 @@ public class PersistedBean {
     /**
      * This will return the value of {@link #someDate}. The {@link XmlElement}
      * annotation enables it to appear on the returned JSON string.
-     * 
+     *
      * @return the date
      */
     @XmlElement

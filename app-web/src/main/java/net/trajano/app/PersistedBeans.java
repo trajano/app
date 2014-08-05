@@ -9,7 +9,7 @@ import javax.persistence.PersistenceContext;
 
 /**
  * SLSB to manage persisted classes. This would be the table model.
- * 
+ *
  * @author Archimedes Trajano
  */
 @Stateless
@@ -23,7 +23,7 @@ public class PersistedBeans {
 
     /**
      * Gets a specific record.
-     * 
+     *
      * @param id
      *            primary key
      * @return persisted bean
@@ -34,7 +34,7 @@ public class PersistedBeans {
 
     /**
      * Gets all the records.
-     * 
+     *
      * @return the contents of the table.
      */
     public List<PersistedBean> getAll() {
@@ -45,8 +45,22 @@ public class PersistedBeans {
     }
 
     /**
+     * Gets a message.
+     *
+     * @param message
+     *            message to search for
+     * @return the contents of the table.
+     */
+    public List<PersistedBean> getByMessage(final String message) {
+        return em
+                .createNamedQuery("PersistedBean.getAllByMessage",
+                        PersistedBean.class).setFlushMode(FlushModeType.AUTO)
+                .setParameter("message", message).getResultList();
+    }
+
+    /**
      * Gets the latest record. It returns null if there are no records.
-     * 
+     *
      * @return latest record.
      */
     public PersistedBean getLatest() {
@@ -59,9 +73,20 @@ public class PersistedBeans {
     }
 
     /**
+     * Removes persisted data.
+     *
+     * @param bean
+     *            bean to remove
+     */
+    public void remove(final PersistedBean bean) {
+        em.remove(bean);
+        em.flush();
+    }
+
+    /**
      * Save, flush and refresh a persisted bean. The flush and refreshing is
      * needed to ensure that the temporal data contains the proper values.
-     * 
+     *
      * @param bean
      *            bean to persist.
      */
@@ -73,7 +98,7 @@ public class PersistedBeans {
 
     /**
      * Injects the entity manager for testing.
-     * 
+     *
      * @param entityManager
      *            entity manager.
      */
