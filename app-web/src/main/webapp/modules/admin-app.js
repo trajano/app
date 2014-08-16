@@ -19,7 +19,7 @@
     }).when('/:page', {
       templateUrl: function($routeParams) {
         return $routeParams.page + '.html';
-      },
+      }
     }).otherwise({
       redirectTo: '/home'
     });
@@ -184,7 +184,7 @@
                                 icon: "tasks",
                                 message: "New task",
                                 when: "4 minutes ago"
-                              },
+                              }
 
                               ]
                             };
